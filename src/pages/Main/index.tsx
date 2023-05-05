@@ -1,15 +1,17 @@
-import { Container } from './styles'
+import { Container, ContainerBg } from './styles';
+import cimentoBg from '../../imgs/textura-cimento.png';
+import { Header } from '../../components/Header';
+import { MainContent } from '../../components/MainContent';
 
-export default function Main() {
+const Main = () => {
   return (
-    <Container>
-      <img
-        src='https://devsamurai-materials.s3.amazonaws.com/templates/avatar-gradient-dark.svg'
-        height='256'
-        alt='Dev Samurai'
-      />
-      <h1>Fala Samurai!</h1>
-      <p>Esse é o template typescript básico da Dev Samurai para React.</p>
-    </Container>
+    <Container imgUrl={cimentoBg}>
+      <ContainerBg>
+        <Header />
+        <MainContent/>
+      </ContainerBg>
+    </Container >
   )
 }
+
+export default Main;
