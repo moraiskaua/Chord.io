@@ -1,6 +1,13 @@
 import styled from 'styled-components'
 import { IoPlay } from 'react-icons/io5'
 
+type IndicatorProps = {
+  indicator: {
+    color: string
+    position: string
+  }
+}
+
 export const Container = styled.div`
   height: 100%;
   display: flex;
@@ -26,8 +33,17 @@ export const AcertometroGradient = styled.div`
   width: 70%;
   background: linear-gradient(to top, #fb037a, #6e49d7, #00fec1);
 `
+export const IndicatorArea = styled.div`
+  height: 77%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
-export const Indicator = styled(IoPlay)`
-  transform: rotate(-180deg);
-  fill: #0fa;
+export const Indicator = styled(IoPlay)<IndicatorProps>`
+  transition: ease all 1.2s;
+  transform: rotate(180deg);
+  position: relative;
+  bottom: ${(props) => props.indicator.position};
+  fill: ${(props) => props.indicator.color};
 `

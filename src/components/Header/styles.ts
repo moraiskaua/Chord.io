@@ -13,7 +13,7 @@ export const LeftIcons = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.3rem;
   margin-left: 2.125rem;
 `
 

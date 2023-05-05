@@ -1,12 +1,16 @@
-import { Container, AcertometroBorder, AcertometroGradient, Indicator } from "./styles";
+import { Container, AcertometroBorder, AcertometroGradient, Indicator, IndicatorArea } from "./styles";
+import { indicator } from "../../helpers/indicator";
 
 export const Acertometro = () => {
+
     return (
         <Container>
             <AcertometroBorder>
                 <AcertometroGradient />
             </AcertometroBorder>
-            <Indicator size={70}/>
+            <IndicatorArea>
+                <Indicator size={70} indicator={indicator.top} />
+            </IndicatorArea>
         </Container>
     );
 }

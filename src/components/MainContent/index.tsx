@@ -1,4 +1,5 @@
 import { Acertometro } from "../Acertometro";
+import { InteractiveArea } from "../InteractiveArea";
 import { Container, LSide, RSide, AcertometroTitle, AcertometroBox } from "./styles";
 
 export const MainContent = () => {
@@ -6,7 +7,7 @@ export const MainContent = () => {
     return (
         <Container>
             <LSide>
-
+                <InteractiveArea />
             </LSide>
             <RSide>
                 <AcertometroTitle>
