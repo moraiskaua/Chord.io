@@ -13,6 +13,9 @@ const config: Config = {
         secondary: '#8C52B9',
         tertiary: '#231C24',
       },
+      boxShadow: {
+        custom: 'inset 15px 15px 50px 5px rgba(0,0,0,0.40)',
+      },
     },
   },
   plugins: [],
