@@ -21,6 +21,7 @@ export const getRandomChord = () => {
   const randomNote = possibleNotes[randomNoteIndex];
   const chordType = Math.random() < 0.5 ? '' : 'm';
 
+  let chordName = '';
   const chordNotes = [];
   const rootIndex = possibleNotes.indexOf(randomNote);
 
@@ -30,8 +31,6 @@ export const getRandomChord = () => {
   chordNotes.push(possibleNotes[rootIndex]);
   chordNotes.push(possibleNotes[thirdNoteIndex]);
   chordNotes.push(possibleNotes[fifthNoteIndex]);
-
-  let chordName = '';
 
   switch (chordType) {
     case 'm':

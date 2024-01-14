@@ -10,16 +10,19 @@ interface ChordType {
   notes: string[];
 }
 
+type Instrument = 'guitar-acoustic' | 'piano';
+
 const AudioPlayer = () => {
   const { isToneInitialized } = useTone();
   const [loaded, setLoaded] = useState(false);
   const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
+  const [userGuess, setUserGuess] = useState<string>('');
+  const [userInput, setUserInput] = useState<string>('');
+  const [instrument, setInstrument] = useState<Instrument>('guitar-acoustic');
   const [dailyChord, setDailyChord] = useState<ChordType>({
     name: '',
     notes: [],
   });
-  const [userGuess, setUserGuess] = useState<string>('');
-  const [userInput, setUserInput] = useState<string>('');
 
   useEffect(() => {
     let newChord = getRandomChord();
@@ -40,7 +43,7 @@ const AudioPlayer = () => {
 
       const newSampler = new Tone.Sampler({
         urls: noteUrls,
-        baseUrl: '/assets/guitar-acoustic/',
+        baseUrl: `/assets/${instrument}/`,
         onload: () => {
           setLoaded(true);
         },
@@ -48,7 +51,7 @@ const AudioPlayer = () => {
 
       setSampler(newSampler);
     }
-  }, [isToneInitialized]);
+  }, [isToneInitialized, instrument]);
 
   const playChord = ({ notes }: ChordType): void => {
     if (loaded && sampler) {
@@ -68,12 +71,6 @@ const AudioPlayer = () => {
     }
   };
 
-  const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    setUserInput(event.target.value);
-  };
-
   return (
     <div>
       <p className="font-bold text-white">Acorde do dia: {dailyChord?.name}</p>
@@ -85,7 +82,7 @@ const AudioPlayer = () => {
         <input
           type="text"
           value={userInput}
-          onChange={handleInputChange}
+          onChange={e => setUserInput(e.target.value)}
           placeholder="Digite o acorde"
           className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
           disabled={!loaded || !isToneInitialized}
@@ -115,6 +112,14 @@ const AudioPlayer = () => {
       >
         Tocar nota por nota
       </button>
+      <select
+        className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
+        value={instrument}
+        onChange={e => setInstrument(e.target.value as Instrument)}
+      >
+        <option value="guitar-acoustic">Violão Acústico</option>
+        <option value="piano">Piano</option>
+      </select>
 
       {userGuess && (
         <p
