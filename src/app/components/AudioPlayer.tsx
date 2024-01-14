@@ -6,6 +6,9 @@ import * as Tone from 'tone';
 import { notesUrl } from '@/data/notes';
 import { InstrumentContext } from '@/contexts/InstrumentContext';
 import Correctometer from './Correctometer';
+import { FaPlay } from 'react-icons/fa';
+import { GiMusicalNotes } from 'react-icons/gi';
+import { FaArrowTurnDown } from 'react-icons/fa6';
 
 interface ChordType {
   name: string;
@@ -53,6 +56,10 @@ const AudioPlayer = () => {
     }
   }, [isToneInitialized, instrument]);
 
+  const capitalizeFirstLetter = (input: string) => {
+    return input.charAt(0).toUpperCase() + input.slice(1);
+  };
+
   const playChord = ({ notes }: ChordType): void => {
     if (loaded && sampler) {
       Tone.start();
@@ -73,7 +80,7 @@ const AudioPlayer = () => {
 
   return (
     <div className="bg-[#231C24] w-[95%] md:h-[580px] rounded-2xl flex-1 flex">
-      <div>
+      <div className="">
         <p className="font-bold text-white">
           Acorde do dia: {dailyChord?.name}
         </p>
@@ -84,38 +91,53 @@ const AudioPlayer = () => {
 
       <form
         onSubmit={e => e.preventDefault()}
-        className="w-full flex justify-center items-center"
+        className="w-full flex flex-col gap-3 items-center justify-center"
       >
         <input
           type="text"
           value={userInput}
-          onChange={e => setUserInput(e.target.value)}
-          placeholder="F#m"
+          onChange={e => setUserInput(capitalizeFirstLetter(e.target.value))}
+          placeholder="Ex: F#m"
           className={`bg-transparent border-b-8 border-primary text-white text-center font-bold text-8xl py-4 outline-none w-[500px]`}
           disabled={!loaded || !isToneInitialized}
         />
+        {userGuess && (
+          <p
+            className={`text-center text-xl ${
+              userGuess === dailyChord?.name ? 'text-green-500' : 'text-red-500'
+            }`}
+          >
+            {userGuess === dailyChord?.name ? 'Correto!' : 'Incorreto!'}
+          </p>
+        )}
+        <div className="mt-5 w-full flex justify-center gap-3">
+          <button
+            className="bg-primary p-6 rounded-2xl"
+            type="button"
+            onClick={() => playChord(dailyChord)}
+          >
+            <FaPlay size={60} color="#8C52B9" />
+          </button>
+          <button
+            className="bg-primary p-6 rounded-2xl"
+            type="button"
+            onClick={() => playChordArpeggiated(dailyChord)}
+          >
+            <GiMusicalNotes size={60} color="#8C52B9" />
+          </button>
+          <button
+            className="bg-[#8C52B9] text-white border-2 border-primary rounded-2xl p-6 uppercase font-bold flex flex-col justify-center items-center gap-2"
+            type="submit"
+            onClick={() => setUserGuess(userInput)}
+          >
+            Enter
+            <FaArrowTurnDown className="rotate-90" />
+          </button>
+        </div>
       </form>
-
       <div>
         <Correctometer />
       </div>
-
-      {/* <div className="w-full flex justify-center items-center">
-        <button
-          onClick={() => playChord(dailyChord)}
-          className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
-          disabled={!loaded || !isToneInitialized}
-        >
-          Tocar acorde
-        </button>
-        <button
-          onClick={() => playChordArpeggiated(dailyChord)}
-          className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
-          disabled={!loaded || !isToneInitialized}
-        >
-          Tocar nota por nota
-        </button>
-      </div> */}
     </div>
   );
 };
