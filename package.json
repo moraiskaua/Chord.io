@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tonaljs/tonal": "^4.10.0",
     "axios": "^1.6.5",
     "next": "14.0.4",
     "react": "^18",
