@@ -1,24 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useTone, { getRandomChord } from '@/hooks/useTone';
 import * as Tone from 'tone';
 import { notesUrl } from '@/data/notes';
+import { InstrumentContext } from '@/contexts/InstrumentContext';
+import Correctometer from './Correctometer';
 
 interface ChordType {
   name: string;
   notes: string[];
 }
 
-type Instrument = 'guitar-acoustic' | 'piano';
-
 const AudioPlayer = () => {
+  const { instrument } = useContext(InstrumentContext);
   const { isToneInitialized } = useTone();
   const [loaded, setLoaded] = useState(false);
   const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
   const [userGuess, setUserGuess] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
-  const [instrument, setInstrument] = useState<Instrument>('piano');
   const [dailyChord, setDailyChord] = useState<ChordType>({
     name: '',
     notes: [],
@@ -72,64 +72,50 @@ const AudioPlayer = () => {
   };
 
   return (
-    <div>
-      <p className="font-bold text-white">Acorde do dia: {dailyChord?.name}</p>
-      <p className="font-bold text-white">
-        Notas: {dailyChord?.notes.join(', ')}
-      </p>
+    <div className="bg-[#231C24] w-[95%] md:h-[580px] rounded-2xl flex-1 flex">
+      <div>
+        <p className="font-bold text-white">
+          Acorde do dia: {dailyChord?.name}
+        </p>
+        <p className="font-bold text-white">
+          Notas: {dailyChord?.notes.join(', ')}
+        </p>
+      </div>
 
-      <form onSubmit={e => e.preventDefault()}>
+      <form
+        onSubmit={e => e.preventDefault()}
+        className="w-full flex justify-center items-center"
+      >
         <input
           type="text"
           value={userInput}
           onChange={e => setUserInput(e.target.value)}
-          placeholder="Digite o acorde"
-          className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
+          placeholder="F#m"
+          className={`bg-transparent border-b-8 border-primary text-white text-center font-bold text-8xl py-4 outline-none w-[500px]`}
           disabled={!loaded || !isToneInitialized}
         />
+      </form>
 
+      <div>
+        <Correctometer />
+      </div>
+
+      {/* <div className="w-full flex justify-center items-center">
         <button
-          onClick={() => setUserGuess(userInput)}
+          onClick={() => playChord(dailyChord)}
           className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
           disabled={!loaded || !isToneInitialized}
         >
-          Enviar
+          Tocar acorde
         </button>
-
-        {/* Botão para tocar o acorde diário novamente */}
-      </form>
-      <button
-        onClick={() => playChord(dailyChord)}
-        className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
-        disabled={!loaded || !isToneInitialized}
-      >
-        Tocar acorde
-      </button>
-      <button
-        onClick={() => playChordArpeggiated(dailyChord)}
-        className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
-        disabled={!loaded || !isToneInitialized}
-      >
-        Tocar nota por nota
-      </button>
-      <select
-        className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
-        value={instrument}
-        onChange={e => setInstrument(e.target.value as Instrument)}
-      >
-        <option value="guitar-acoustic">Violão Acústico</option>
-        <option value="piano">Piano</option>
-      </select>
-
-      {userGuess && (
-        <p
-          className={`text-center text-xl ${
-            userGuess === dailyChord?.name ? 'text-green-500' : 'text-red-500'
-          }`}
+        <button
+          onClick={() => playChordArpeggiated(dailyChord)}
+          className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
+          disabled={!loaded || !isToneInitialized}
         >
-          {userGuess === dailyChord?.name ? 'Correto!' : 'Incorreto!'}
-        </p>
-      )}
+          Tocar nota por nota
+        </button>
+      </div> */}
     </div>
   );
 };

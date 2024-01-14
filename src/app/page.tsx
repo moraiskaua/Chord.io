@@ -1,10 +1,17 @@
+'use client';
+
+import InstrumentProvider from '@/contexts/InstrumentContext';
 import AudioPlayer from './components/AudioPlayer';
+import Header from './components/Header';
 
 const Home = () => {
   return (
-    <main className="flex flex-col min-h-screen items-center justify-center gap-10 p-20 bg-gray-900">
-      <AudioPlayer />
-    </main>
+    <InstrumentProvider>
+      <main className="min-h-screen w-full flex flex-col justify-center items-center">
+        <Header />
+        <AudioPlayer />
+      </main>
+    </InstrumentProvider>
   );
 };
 
