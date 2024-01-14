@@ -22,16 +22,18 @@ const AudioPlayer = () => {
   const [userInput, setUserInput] = useState<string>('');
 
   useEffect(() => {
-    const newChord = getRandomChord();
+    let newChord = getRandomChord();
+    newChord = {
+      ...newChord,
+      name: newChord.name.replace('3', ''),
+    };
+
     setDailyChord(newChord);
-    setUserGuess('');
   }, []);
 
   useEffect(() => {
     if (isToneInitialized) {
       const noteUrls: { [key: string]: string } = {};
-
-      // Preencha a constante noteUrls usando os dados de notesData
       Object.entries(notesUrl).forEach(([note, data]) => {
         noteUrls[note] = data.path;
       });
@@ -41,7 +43,6 @@ const AudioPlayer = () => {
         baseUrl: '/assets/guitar-acoustic/',
         onload: () => {
           setLoaded(true);
-          playDailyChord();
         },
       }).toDestination();
 
@@ -49,32 +50,28 @@ const AudioPlayer = () => {
     }
   }, [isToneInitialized]);
 
-  const playChord = ({ name, notes }: ChordType): void => {
-    console.log('Chord:', name);
-    console.log('Notes:', notes);
-
+  const playChord = ({ notes }: ChordType): void => {
     if (loaded && sampler) {
       Tone.start();
       sampler.triggerAttackRelease(notes, 1);
     }
   };
 
-  const handleGuess = (chord: string): void => {
-    setUserGuess(chord);
+  const playChordArpeggiated = ({ notes }: ChordType): void => {
+    if (loaded && sampler) {
+      Tone.start();
+      notes.forEach((note, index) => {
+        setTimeout(() => {
+          sampler.triggerAttackRelease(note, 1);
+        }, index * 400);
+      });
+    }
   };
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     setUserInput(event.target.value);
-  };
-
-  const handleUserSubmit = (): void => {
-    handleGuess(userInput);
-  };
-
-  const playDailyChord = (): void => {
-    playChord(dailyChord);
   };
 
   return (
@@ -84,7 +81,7 @@ const AudioPlayer = () => {
         Notas: {dailyChord?.notes.join(', ')}
       </p>
 
-      <div>
+      <form onSubmit={e => e.preventDefault()}>
         <input
           type="text"
           value={userInput}
@@ -95,7 +92,7 @@ const AudioPlayer = () => {
         />
 
         <button
-          onClick={handleUserSubmit}
+          onClick={() => setUserGuess(userInput)}
           className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
           disabled={!loaded || !isToneInitialized}
         >
@@ -103,13 +100,20 @@ const AudioPlayer = () => {
         </button>
 
         {/* Botão para tocar o acorde diário novamente */}
-      </div>
+      </form>
       <button
-        onClick={playDailyChord}
+        onClick={() => playChord(dailyChord)}
         className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
         disabled={!loaded || !isToneInitialized}
       >
-        Tocar Acorde do Dia Novamente
+        Tocar acorde
+      </button>
+      <button
+        onClick={() => playChordArpeggiated(dailyChord)}
+        className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
+        disabled={!loaded || !isToneInitialized}
+      >
+        Tocar nota por nota
       </button>
 
       {userGuess && (
