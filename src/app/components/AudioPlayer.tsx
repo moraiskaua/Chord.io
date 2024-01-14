@@ -1,5 +1,6 @@
 'use client';
 
+import useTone from '@/hooks/useTone';
 import { useEffect, useState } from 'react';
 import * as Tone from 'tone';
 
@@ -8,24 +9,27 @@ interface AudioPlayerProps {
 }
 
 const AudioPlayer = ({ note }: AudioPlayerProps) => {
+  const { isToneInitialized } = useTone();
   const [loaded, setLoaded] = useState(false);
-  const sampler = new Tone.Sampler({
-    urls: {
-      [note]: `/assets/guitar-acoustic/${note}.mp3`,
-    },
-    onload: () => {
-      setLoaded(true);
-    },
-  }).toDestination();
+  const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
 
   useEffect(() => {
-    return () => {
-      sampler.dispose();
-    };
-  }, [sampler]);
+    if (isToneInitialized) {
+      const newSampler = new Tone.Sampler({
+        urls: {
+          [note]: `/assets/guitar-acoustic/${note}.mp3`,
+        },
+        onload: () => {
+          setLoaded(true);
+        },
+      }).toDestination();
+
+      setSampler(newSampler);
+    }
+  }, [note, isToneInitialized]);
 
   const playNote = () => {
-    if (loaded) {
+    if (loaded && sampler) {
       Tone.start();
       sampler.triggerAttackRelease(note, 1);
     }
@@ -35,6 +39,7 @@ const AudioPlayer = ({ note }: AudioPlayerProps) => {
     <button
       className="bg-gray-800 text-white font-bold p-10 rounded-2xl"
       onClick={playNote}
+      disabled={!loaded || !isToneInitialized}
     >
       {note}
     </button>
