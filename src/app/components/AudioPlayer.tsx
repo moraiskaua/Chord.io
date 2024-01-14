@@ -1,11 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import useTone, { getRandomChord } from '@/hooks/useTone';
+import useTone, { getRandomChord, getChordNotes } from '@/hooks/useTone';
 import * as Tone from 'tone';
 import { Frequency } from 'tone/build/esm/core/type/Units';
-
-const possibleNotes = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 
 interface ChordType {
   name: string;
@@ -21,6 +19,7 @@ const AudioPlayer = () => {
     notes: [],
   });
   const [userGuess, setUserGuess] = useState<string>('');
+  const [userInput, setUserInput] = useState<string>('');
 
   useEffect(() => {
     const newChord = getRandomChord();
@@ -41,6 +40,8 @@ const AudioPlayer = () => {
         urls: noteUrls,
         onload: () => {
           setLoaded(true);
+          // Toca o acorde quando a página carrega
+          playDailyChord();
         },
       }).toDestination();
 
@@ -49,9 +50,13 @@ const AudioPlayer = () => {
   }, [isToneInitialized]);
 
   const playChord = (chord: string): void => {
+    const notes = getChordNotes(chord);
+    console.log('Chord:', chord);
+    console.log('Notes:', notes);
+
     if (loaded && sampler) {
       Tone.start();
-      sampler.triggerAttackRelease(dailyChord.notes, 1);
+      sampler.triggerAttackRelease(notes, 1);
     }
   };
 
@@ -59,42 +64,55 @@ const AudioPlayer = () => {
     setUserGuess(chord);
   };
 
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    setUserInput(event.target.value);
+  };
+
+  const handleUserSubmit = (): void => {
+    playChord(userInput);
+    handleGuess(userInput);
+  };
+
+  const playDailyChord = (): void => {
+    playChord(dailyChord.name);
+  };
+
   return (
     <div>
       <p className="font-bold text-white">Acorde do dia: {dailyChord?.name}</p>
-      <p className="font-bold text-white">notas: {dailyChord?.notes}</p>
+      <p className="font-bold text-white">
+        Notas: {dailyChord?.notes.join(', ')}
+      </p>
 
       <div>
-        {possibleNotes.map(note => (
-          <button
-            key={note}
-            className={`bg-gray-800 text-white font-bold p-4 m-2 rounded-lg ${
-              userGuess === note ? 'bg-blue-500' : ''
-            }`}
-            onClick={() => {
-              playChord(note);
-              handleGuess(note);
-            }}
-            disabled={!loaded || !isToneInitialized}
-          >
-            {note}
-          </button>
-        ))}
+        <input
+          type="text"
+          value={userInput}
+          onChange={handleInputChange}
+          placeholder="Digite o acorde"
+          className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
+          disabled={!loaded || !isToneInitialized}
+        />
 
-        {possibleNotes.map(note => (
-          <button
-            key={`${note}min`}
-            className={`bg-gray-800 text-white font-bold p-4 m-2 rounded-lg`}
-            onClick={() => {
-              playChord(note);
-              handleGuess(`${note}m`);
-            }}
-            disabled={!loaded || !isToneInitialized}
-          >
-            {note}m
-          </button>
-        ))}
+        <button
+          onClick={handleUserSubmit}
+          className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
+          disabled={!loaded || !isToneInitialized}
+        >
+          Enviar
+        </button>
+
+        {/* Botão para tocar o acorde diário novamente */}
       </div>
+      <button
+        onClick={playDailyChord}
+        className="bg-gray-800 text-white font-bold p-4 m-2 rounded-lg"
+        disabled={!loaded || !isToneInitialized}
+      >
+        Tocar Acorde do Dia Novamente
+      </button>
 
       {userGuess && (
         <p
