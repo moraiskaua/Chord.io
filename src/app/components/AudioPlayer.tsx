@@ -18,7 +18,7 @@ const AudioPlayer = () => {
   const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
   const [userGuess, setUserGuess] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
-  const [instrument, setInstrument] = useState<Instrument>('guitar-acoustic');
+  const [instrument, setInstrument] = useState<Instrument>('piano');
   const [dailyChord, setDailyChord] = useState<ChordType>({
     name: '',
     notes: [],
@@ -28,7 +28,7 @@ const AudioPlayer = () => {
     let newChord = getRandomChord();
     newChord = {
       ...newChord,
-      name: newChord.name.replace('3', ''),
+      name: newChord.name.replace('4', ''),
     };
 
     setDailyChord(newChord);
