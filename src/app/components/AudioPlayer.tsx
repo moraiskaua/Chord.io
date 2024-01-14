@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import useTone, { getRandomChord, getChordNotes } from '@/hooks/useTone';
+import useTone, { getRandomChord } from '@/hooks/useTone';
 import * as Tone from 'tone';
-import { Frequency } from 'tone/build/esm/core/type/Units';
+import { notesUrl } from '@/data/notes';
 
 interface ChordType {
   name: string;
-  notes: Frequency[];
+  notes: string[];
 }
 
 const AudioPlayer = () => {
@@ -30,17 +30,17 @@ const AudioPlayer = () => {
   useEffect(() => {
     if (isToneInitialized) {
       const noteUrls: { [key: string]: string } = {};
-      const possibilities = ['C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3'];
 
-      possibilities.forEach(note => {
-        noteUrls[note] = `/assets/guitar-acoustic/${note}.mp3`;
+      // Preencha a constante noteUrls usando os dados de notesData
+      Object.entries(notesUrl).forEach(([note, data]) => {
+        noteUrls[note] = data.path;
       });
 
       const newSampler = new Tone.Sampler({
         urls: noteUrls,
+        baseUrl: '/assets/guitar-acoustic/',
         onload: () => {
           setLoaded(true);
-          // Toca o acorde quando a página carrega
           playDailyChord();
         },
       }).toDestination();
@@ -49,9 +49,8 @@ const AudioPlayer = () => {
     }
   }, [isToneInitialized]);
 
-  const playChord = (chord: string): void => {
-    const notes = getChordNotes(chord);
-    console.log('Chord:', chord);
+  const playChord = ({ name, notes }: ChordType): void => {
+    console.log('Chord:', name);
     console.log('Notes:', notes);
 
     if (loaded && sampler) {
@@ -71,12 +70,11 @@ const AudioPlayer = () => {
   };
 
   const handleUserSubmit = (): void => {
-    playChord(userInput);
     handleGuess(userInput);
   };
 
   const playDailyChord = (): void => {
-    playChord(dailyChord.name);
+    playChord(dailyChord);
   };
 
   return (
