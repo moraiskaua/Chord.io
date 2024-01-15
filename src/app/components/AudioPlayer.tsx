@@ -97,10 +97,16 @@ const AudioPlayer = () => {
     }
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setUserGuess(userInput);
+    calculateAccuracy(userInput, dailyChord.notes);
+  };
+
   return (
     <div className="bg-[#231C24] w-[95%] md:h-[580px] rounded-2xl flex-1 flex">
       <form
-        onSubmit={e => e.preventDefault()}
+        onSubmit={handleSubmit}
         className="w-full flex flex-col gap-3 items-center justify-center"
       >
         <input
@@ -117,7 +123,7 @@ const AudioPlayer = () => {
               userGuess === dailyChord?.name ? 'text-green-500' : 'text-red-500'
             }`}
           >
-            {userGuess === dailyChord?.name ? 'Correto!' : 'Incorreto!'}
+            {userGuess === dailyChord?.name ? 'Right!' : 'Wrong!'}
           </p>
         )}
         <div className="mt-5 w-full flex justify-center gap-3">
@@ -138,10 +144,6 @@ const AudioPlayer = () => {
           <button
             className="bg-[#8C52B9] text-white border-2 border-primary rounded-2xl p-6 uppercase font-bold flex flex-col justify-center items-center gap-2"
             type="submit"
-            onClick={() => {
-              calculateAccuracy(userGuess, dailyChord.notes);
-              setUserGuess(userInput);
-            }}
           >
             Enter
             <FaArrowTurnDown className="rotate-90" />
