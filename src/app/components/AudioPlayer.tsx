@@ -9,6 +9,10 @@ import Correctometer from './Correctometer';
 import { FaPlay } from 'react-icons/fa';
 import { GiMusicalNotes } from 'react-icons/gi';
 import { FaArrowTurnDown } from 'react-icons/fa6';
+import {
+  calculateCircularNoteDistance,
+  calculateOverallAccuracy,
+} from '@/utils/calculateAccurancy';
 
 interface ChordType {
   name: string;
@@ -32,10 +36,6 @@ const AudioPlayer = () => {
     console.log('Acorde: ' + dailyChord?.name);
     console.log('Notas: ' + dailyChord?.notes);
   }, [dailyChord]);
-
-  useEffect(() => {
-    console.log('Acerto: ' + accuracy);
-  }, [accuracy]);
 
   useEffect(() => {
     let newChord = getRandomChord();
@@ -116,38 +116,6 @@ const AudioPlayer = () => {
     setAccuracy(prev => accuracyPercentage);
   };
 
-  // Função auxiliar para calcular a pontuação geral com base na distância total
-  const calculateOverallAccuracy = (
-    totalDistance: number,
-    noteCount: number,
-  ): number => {
-    // Normaliza a distância média em relação ao número de notas
-    const averageDistance = totalDistance / noteCount;
-
-    // Calcula a pontuação com base na distância média
-    const accuracyPercentage = Math.max(100 - averageDistance * 10, 0);
-
-    return accuracyPercentage;
-  };
-
-  // Função auxiliar para calcular a distância circular entre duas notas
-  const calculateCircularNoteDistance = (
-    note1: string,
-    note2: string,
-    possibilities: string[],
-  ): number => {
-    const index1 = possibilities.indexOf(note1);
-    const index2 = possibilities.indexOf(note2);
-
-    // Calcula a distância circular considerando o círculo de quintas
-    const distance = Math.min(
-      Math.abs(index1 - index2),
-      possibilities.length - Math.abs(index1 - index2),
-    );
-
-    return distance;
-  };
-
   const playChord = ({ notes }: ChordType): void => {
     if (loaded && sampler) {
       Tone.start();
@@ -174,7 +142,7 @@ const AudioPlayer = () => {
   };
 
   return (
-    <div className="bg-[#231C24] w-[95%] md:h-[580px] rounded-2xl flex-1 flex">
+    <div className="bg-[#231C24] w-[95%] rounded-2xl flex-1 flex p-3">
       <form
         onSubmit={handleSubmit}
         className="w-full flex flex-col gap-3 items-center justify-center"
@@ -189,11 +157,19 @@ const AudioPlayer = () => {
         />
         {userGuess && (
           <p
-            className={`text-center text-xl ${
-              userGuess === dailyChord?.name ? 'text-green-500' : 'text-red-500'
+            className={`text-center text-xl uppercase font-bold ${
+              accuracy === 100
+                ? 'text-[#00F5B5]'
+                : accuracy <= 99 && accuracy >= 90
+                ? 'text-[#23C5C8]'
+                : 'text-[#FB037A]'
             }`}
           >
-            {userGuess === dailyChord?.name ? 'Right!' : 'Wrong!'}
+            {accuracy === 100
+              ? 'Right!'
+              : accuracy <= 99 && accuracy >= 90
+              ? 'Almost!'
+              : 'Wrong!'}
           </p>
         )}
         <div className="mt-5 w-full flex justify-center gap-3">

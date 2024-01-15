@@ -10,7 +10,7 @@ const Correctometer = ({ accuracy }: CorrectometerProps) => {
     almostRight: { position: 'top-7', color: 'text-[#23C5C8]' },
     almostAlmostRight: { position: 'top-16', color: 'text-[#39A1CD]' },
     almostMiddleRight: { position: 'top-24', color: 'text-[#4B83D0]' },
-    middle: { position: 'top-40', color: 'text-[#6B4FD6]' },
+    middle: { position: 'top-36', color: 'text-[#6952D6]' },
     almostMiddleWrong: { position: 'bottom-24', color: 'text-[#A22FB4]' },
     almostAlmostWrong: { position: 'bottom-16', color: 'text-[#B825A7]' },
     wrong: { position: '-bottom-5', color: 'text-[#FB037A]' },
