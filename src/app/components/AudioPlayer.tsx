@@ -71,12 +71,77 @@ const AudioPlayer = () => {
   };
 
   const calculateAccuracy = (userGuess: string, correctNotes: string[]) => {
+    const possibilities = [
+      'C',
+      'C#',
+      'D',
+      'D#',
+      'E',
+      'F',
+      'F#',
+      'G',
+      'G#',
+      'A',
+      'A#',
+      'B',
+    ];
+
     const dailyNotes = correctNotes.map(note => note.replace('4', ''));
     const userNotes = getChordNotes(userGuess);
-    const intersection = userNotes.filter(note => dailyNotes.includes(note));
-    const accuracyPercentage = (intersection.length / dailyNotes.length) * 100;
+
+    let totalDistance = 0;
+
+    // Calcula a distância total entre as notas
+    for (let i = 0; i < userNotes.length; i++) {
+      const userNote = userNotes[i];
+      const correctNote = dailyNotes[i];
+      const distance = calculateCircularNoteDistance(
+        userNote,
+        correctNote,
+        possibilities,
+      );
+      totalDistance += distance;
+    }
+
+    // Calcula a pontuação com base na distância total
+    const accuracyPercentage = calculateOverallAccuracy(
+      totalDistance,
+      userNotes.length,
+    );
+
     setAccuracy(prev => accuracyPercentage);
-    console.log(userNotes);
+  };
+
+  // Função auxiliar para calcular a pontuação geral com base na distância total
+  const calculateOverallAccuracy = (
+    totalDistance: number,
+    noteCount: number,
+  ): number => {
+    // Normaliza a distância média em relação ao número de notas
+    const averageDistance = totalDistance / noteCount;
+
+    // Calcula a pontuação com base na distância média
+    const accuracyPercentage = Math.max(100 - averageDistance * 10, 0);
+
+    return accuracyPercentage;
+  };
+
+  // Função auxiliar para calcular a distância circular entre duas notas
+  const calculateCircularNoteDistance = (
+    note1: string,
+    note2: string,
+    possibilities: string[],
+  ): number => {
+    const index1 = possibilities.indexOf(note1);
+    const index2 = possibilities.indexOf(note2);
+
+    // Calcula a distância circular considerando o círculo de quintas
+    const distance = Math.min(
+      Math.abs(index1 - index2),
+      possibilities.length - Math.abs(index1 - index2),
+    );
+
+    return distance;
   };
 
   const playChord = ({ notes }: ChordType): void => {
@@ -99,6 +164,7 @@ const AudioPlayer = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!userInput) alert('Field is empty!');
     setUserGuess(userInput);
     calculateAccuracy(userInput, dailyChord.notes);
   };
