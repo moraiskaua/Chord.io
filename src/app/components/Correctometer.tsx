@@ -44,7 +44,7 @@ const Correctometer = ({ accuracy }: CorrectometerProps) => {
         <div className="bg-[#534657] h-full w-14 rounded-full p-2 relative">
           <div className="bg-gradient-to-b from-[#00FEC1] via-[#6E49D7] to-[#FB037A] h-full rounded-full" />
           <TbGuitarPickFilled
-            className={`rotate-90 absolute left-16 ${position} ${color} transition-transform duration-500`}
+            className={`rotate-90 absolute left-16 ${position} ${color} transition-all ease-linear`}
             size={80}
           />
         </div>
