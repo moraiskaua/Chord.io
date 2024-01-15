@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useEffect, useState } from 'react';
-import useTone, { getRandomChord } from '@/hooks/useTone';
+import useTone, { getChordNotes, getRandomChord } from '@/hooks/useTone';
 import * as Tone from 'tone';
 import { notesUrl } from '@/data/notes';
 import { InstrumentContext } from '@/contexts/InstrumentContext';
@@ -22,10 +22,20 @@ const AudioPlayer = () => {
   const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
   const [userGuess, setUserGuess] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
+  const [accuracy, setAccuracy] = useState(0);
   const [dailyChord, setDailyChord] = useState<ChordType>({
     name: '',
     notes: [],
   });
+
+  useEffect(() => {
+    console.log('Acorde: ' + dailyChord?.name);
+    console.log('Notas: ' + dailyChord?.notes);
+  }, [dailyChord]);
+
+  useEffect(() => {
+    console.log('Acerto: ' + accuracy);
+  }, [accuracy]);
 
   useEffect(() => {
     let newChord = getRandomChord();
@@ -60,6 +70,15 @@ const AudioPlayer = () => {
     return input.charAt(0).toUpperCase() + input.slice(1);
   };
 
+  const calculateAccuracy = (userGuess: string, correctNotes: string[]) => {
+    const dailyNotes = correctNotes.map(note => note.replace('4', ''));
+    const userNotes = getChordNotes(userGuess);
+    const intersection = userNotes.filter(note => dailyNotes.includes(note));
+    const accuracyPercentage = (intersection.length / dailyNotes.length) * 100;
+    setAccuracy(prev => accuracyPercentage);
+    console.log(userNotes);
+  };
+
   const playChord = ({ notes }: ChordType): void => {
     if (loaded && sampler) {
       Tone.start();
@@ -80,15 +99,6 @@ const AudioPlayer = () => {
 
   return (
     <div className="bg-[#231C24] w-[95%] md:h-[580px] rounded-2xl flex-1 flex">
-      <div className="">
-        <p className="font-bold text-white">
-          Acorde do dia: {dailyChord?.name}
-        </p>
-        <p className="font-bold text-white">
-          Notas: {dailyChord?.notes.join(', ')}
-        </p>
-      </div>
-
       <form
         onSubmit={e => e.preventDefault()}
         className="w-full flex flex-col gap-3 items-center justify-center"
@@ -128,7 +138,10 @@ const AudioPlayer = () => {
           <button
             className="bg-[#8C52B9] text-white border-2 border-primary rounded-2xl p-6 uppercase font-bold flex flex-col justify-center items-center gap-2"
             type="submit"
-            onClick={() => setUserGuess(userInput)}
+            onClick={() => {
+              calculateAccuracy(userGuess, dailyChord.notes);
+              setUserGuess(userInput);
+            }}
           >
             Enter
             <FaArrowTurnDown className="rotate-90" />
@@ -136,7 +149,7 @@ const AudioPlayer = () => {
         </div>
       </form>
       <div>
-        <Correctometer />
+        <Correctometer accuracy={accuracy} />
       </div>
     </div>
   );

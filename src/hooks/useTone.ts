@@ -47,6 +47,45 @@ export const getRandomChord = () => {
   };
 };
 
+export const getChordNotes = (chordName: string): string[] => {
+  const possibilities = [
+    'C',
+    'C#',
+    'D',
+    'D#',
+    'E',
+    'F',
+    'F#',
+    'G',
+    'G#',
+    'A',
+    'A#',
+    'B',
+  ];
+
+  const [rootNote, sharp] = chordName.split('#');
+  const isMinor = chordName.includes('m');
+
+  let rootIndex = possibilities.indexOf(rootNote);
+
+  if (sharp) {
+    rootIndex = possibilities.indexOf(rootNote + '#');
+  } else if (isMinor) {
+    rootIndex = possibilities.indexOf(rootNote.slice(0, -1));
+  } else {
+    rootIndex = possibilities.indexOf(chordName);
+  }
+
+  const thirdNoteIndex = (rootIndex + (isMinor ? 3 : 4)) % 12; // Terça menor ou maior
+  const fifthNoteIndex = (rootIndex + 7) % 12; // Quinta perfeita
+
+  return [
+    possibilities[rootIndex],
+    possibilities[thirdNoteIndex],
+    possibilities[fifthNoteIndex],
+  ];
+};
+
 const useTone = () => {
   const [isToneInitialized, setIsToneInitialized] = useState(false);
 
