@@ -22,7 +22,7 @@ const AudioPlayer = () => {
   const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
   const [userGuess, setUserGuess] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
-  const [accuracy, setAccuracy] = useState(0);
+  const [accuracy, setAccuracy] = useState(70);
   const [dailyChord, setDailyChord] = useState<ChordType>({
     name: '',
     notes: [],
@@ -101,6 +101,10 @@ const AudioPlayer = () => {
         possibilities,
       );
       totalDistance += distance;
+    }
+
+    if (userNotes === dailyNotes) {
+      return setAccuracy(prev => accuracyPercentage);
     }
 
     // Calcula a pontuação com base na distância total

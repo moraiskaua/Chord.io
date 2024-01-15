@@ -7,24 +7,27 @@ interface CorrectometerProps {
 const Correctometer = ({ accuracy }: CorrectometerProps) => {
   const pointerPositions = {
     right: { position: '-top-5', color: 'text-[#00F5B5]' },
-    almostRight: { position: 'top-20', color: 'text-[#26C0C9]' },
-    almostAlmostRight: { position: 'top-40', color: 'text-[#458BCF]' },
-    middle: { position: 'top-64', color: 'text-[#6656D6]' },
-    almostAlmostWrong: { position: 'bottom-40', color: 'text-[#C61E9D]' },
-    almostWrong: { position: 'bottom-20', color: 'text-[#C61E9D]' },
+    almostRight: { position: 'top-7', color: 'text-[#23C5C8]' },
+    almostAlmostRight: { position: 'top-16', color: 'text-[#39A1CD]' },
+    almostMiddleRight: { position: 'top-24', color: 'text-[#4B83D0]' },
+    middle: { position: 'top-40', color: 'text-[#6B4FD6]' },
+    almostMiddleWrong: { position: 'bottom-24', color: 'text-[#A22FB4]' },
+    almostAlmostWrong: { position: 'bottom-16', color: 'text-[#B825A7]' },
     wrong: { position: '-bottom-5', color: 'text-[#FB037A]' },
   };
 
   const accuracyRange =
-    accuracy <= 20
+    accuracy <= 43.7
       ? 'wrong'
-      : accuracy <= 40
-      ? 'almostWrong'
-      : accuracy <= 49
+      : accuracy <= 46.7
       ? 'almostAlmostWrong'
-      : accuracy <= 60
+      : accuracy <= 56.7
+      ? 'almostMiddleWrong'
+      : accuracy <= 74
       ? 'middle'
-      : accuracy <= 69
+      : accuracy <= 84
+      ? 'almostMiddleRight'
+      : accuracy <= 94
       ? 'almostAlmostRight'
       : accuracy <= 99
       ? 'almostRight'
@@ -41,7 +44,7 @@ const Correctometer = ({ accuracy }: CorrectometerProps) => {
         <div className="bg-[#534657] h-full w-14 rounded-full p-2 relative">
           <div className="bg-gradient-to-b from-[#00FEC1] via-[#6E49D7] to-[#FB037A] h-full rounded-full" />
           <TbGuitarPickFilled
-            className={`rotate-90 absolute left-16 ${position} ${color}`}
+            className={`rotate-90 absolute left-16 ${position} ${color} transition-transform duration-500`}
             size={80}
           />
         </div>
