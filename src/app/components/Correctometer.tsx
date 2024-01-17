@@ -4,7 +4,7 @@ interface CorrectometerProps {
   accuracy: number;
 }
 
-const Correctometer = ({ accuracy }: CorrectometerProps) => {
+const Correctometer: React.FC<CorrectometerProps> = ({ accuracy }) => {
   const pointerPositions = {
     right: { position: '-top-5', color: 'text-[#00F5B5]' },
     almostRight: { position: 'top-7', color: 'text-[#23C5C8]' },

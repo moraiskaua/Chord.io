@@ -13,6 +13,7 @@ import {
   calculateCircularNoteDistance,
   calculateOverallAccuracy,
 } from '@/utils/calculateAccurancy';
+import MusicButton from './MusicButton';
 
 interface ChordType {
   name: string;
@@ -161,7 +162,7 @@ const AudioPlayer = () => {
               accuracy === 100
                 ? 'text-[#00F5B5]'
                 : accuracy <= 99 && accuracy >= 90
-                ? 'text-[#23C5C8]'
+                ? 'text-[#4B83D0]'
                 : 'text-[#FB037A]'
             }`}
           >
@@ -173,27 +174,21 @@ const AudioPlayer = () => {
           </p>
         )}
         <div className="mt-5 w-full flex justify-center gap-3">
-          <button
-            className="bg-primary p-6 rounded-2xl"
-            type="button"
+          <MusicButton
+            icon={FaPlay}
+            size={60}
             onClick={() => playChord(dailyChord)}
-          >
-            <FaPlay size={60} color="#8C52B9" />
-          </button>
-          <button
-            className="bg-primary p-6 rounded-2xl"
-            type="button"
+          />
+          <MusicButton
+            icon={GiMusicalNotes}
+            size={60}
             onClick={() => playChordArpeggiated(dailyChord)}
-          >
-            <GiMusicalNotes size={60} color="#8C52B9" />
-          </button>
-          <button
-            className="bg-[#8C52B9] text-white border-2 border-primary rounded-2xl p-6 uppercase font-bold flex flex-col justify-center items-center gap-2"
-            type="submit"
-          >
-            Enter
-            <FaArrowTurnDown className="rotate-90" />
-          </button>
+          />
+          <MusicButton
+            icon={FaArrowTurnDown}
+            variant="secondary"
+            text="Enter"
+          />
         </div>
       </form>
       <div>

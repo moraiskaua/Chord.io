@@ -6,15 +6,28 @@ import { CgPiano } from 'react-icons/cg';
 import { FaGuitar } from 'react-icons/fa';
 import { useContext } from 'react';
 import { InstrumentContext } from '@/contexts/InstrumentContext';
+import { HiCalendarDays } from 'react-icons/hi2';
+import { GiSandCastle } from 'react-icons/gi';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Header = () => {
   const { instrument, setInstrument } = useContext(InstrumentContext);
+  const pathname = usePathname();
 
   return (
     <header className="w-full uppercase text-primary font-bold text-7xl flex justify-around items-center h-40">
       <div className="flex gap-4 items-center">
         <IoSettings size={30} />
-        <IoHelpCircleSharp size={35} />
+        {pathname === '/playground' ? (
+          <Link href="/">
+            <HiCalendarDays size={35} />
+          </Link>
+        ) : (
+          <Link href="/playground">
+            <GiSandCastle size={35} />
+          </Link>
+        )}
       </div>
       <h1>CHORD.IO</h1>
       <div className="flex gap-4 items-center">
