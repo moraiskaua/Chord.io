@@ -8,6 +8,8 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { BsGoogle } from 'react-icons/bs';
+import Link from 'next/link';
+import { FaArrowLeft } from 'react-icons/fa6';
 
 type VariantType = 'LOGIN' | 'REGISTER';
 
@@ -75,8 +77,16 @@ const SignIn = () => {
 
   return (
     <div className="rounded-2xl flex flex-col justify-center items-center p-3 h-screen">
+      <div
+        className="absolute top-3 left-3 ring-2 ring-primary p-2 rounded-full text-primary cursor-pointer"
+        onClick={() => router.back()}
+      >
+        <FaArrowLeft size={15} />
+      </div>
       <header className="w-full uppercase text-primary font-bold text-7xl flex justify-around items-center h-40">
-        <h1>CHORD.IO</h1>
+        <Link href="/">
+          <h1>CHORD.IO</h1>
+        </Link>
       </header>
 
       <form
