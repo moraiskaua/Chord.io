@@ -43,11 +43,11 @@ const SignIn = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
+  const onSubmit: SubmitHandler<FieldValues> = async data => {
     setIsLoading(true);
 
     if (variant === 'REGISTER') {
-      axios
+      await axios
         .post('/api/register', data)
         .then(() => signIn('credentials', data))
         // .catch(() => toast.error('Something went wrong!'))
@@ -55,7 +55,7 @@ const SignIn = () => {
     }
 
     if (variant === 'LOGIN') {
-      signIn('credentials', {
+      await signIn('credentials', {
         ...data,
         redirect: false,
       })
