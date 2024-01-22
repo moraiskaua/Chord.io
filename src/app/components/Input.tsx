@@ -36,7 +36,7 @@ const Input = ({
           autoComplete={id}
           disabled={disabled}
           {...register(id, { required })}
-          className={`outline-none form-input block w-full rounded-md p-1.5 bg-[#251926] shadow-sm ring-1 ring-inset ring-primary focus:text-white sm:text-sm sm:leading-6 
+          className={`outline-none form-input block w-full rounded-md p-1.5 bg-[#251926] shadow-sm ring-1 ring-inset ring-primary text-white sm:text-sm sm:leading-6 
           ${errors[id] && 'focus:ring-[#FB037A]'} ${
             disabled && 'opacity-50 cursor-default'
           }`}
