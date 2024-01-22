@@ -1,6 +1,5 @@
 'use client';
 
-import { IoSettings, IoHelpCircleSharp } from 'react-icons/io5';
 import { MdLeaderboard } from 'react-icons/md';
 import { CgPiano } from 'react-icons/cg';
 import { FaGuitar } from 'react-icons/fa';
@@ -10,15 +9,28 @@ import { HiCalendarDays } from 'react-icons/hi2';
 import { GiSandCastle } from 'react-icons/gi';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
+import { BiExit, BiUser } from 'react-icons/bi';
 
 const Header = () => {
   const { instrument, setInstrument } = useContext(InstrumentContext);
   const pathname = usePathname();
+  const session = useSession();
 
   return (
     <header className="w-full uppercase text-primary font-bold text-7xl flex justify-around items-center h-40">
       <div className="flex gap-4 items-center">
-        <IoSettings size={30} />
+        {session.status === 'authenticated' ? (
+          <BiExit
+            size={35}
+            className="cursor-pointer"
+            onClick={() => signOut()}
+          />
+        ) : (
+          <Link href="/sign-in">
+            <BiUser size={30} />
+          </Link>
+        )}
         {pathname === '/playground' ? (
           <Link href="/">
             <HiCalendarDays size={35} />
