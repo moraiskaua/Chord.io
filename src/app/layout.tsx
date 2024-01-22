@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import AuthContext from '@/contexts/AuthContext';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -13,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-[#201d20]">{children}</body>
+      <body className="bg-[#201d20]">
+        <AuthContext>{children}</AuthContext>
+      </body>
     </html>
   );
 }
