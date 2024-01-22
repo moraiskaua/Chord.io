@@ -14,6 +14,8 @@ import {
   calculateOverallAccuracy,
 } from '@/utils/calculateAccurancy';
 import MusicButton from './MusicButton';
+import Modal from './Modal';
+import { usePathname } from 'next/navigation';
 
 interface ChordType {
   name: string;
@@ -21,6 +23,7 @@ interface ChordType {
 }
 
 const AudioPlayer = () => {
+  const path = usePathname();
   const { instrument } = useContext(InstrumentContext);
   const { isToneInitialized } = useTone();
   const [loaded, setLoaded] = useState(false);
@@ -28,6 +31,7 @@ const AudioPlayer = () => {
   const [userGuess, setUserGuess] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
   const [accuracy, setAccuracy] = useState(70);
+  const [hitModal, setHitModal] = useState(false);
   const [dailyChord, setDailyChord] = useState<ChordType>({
     name: '',
     notes: [],
@@ -39,14 +43,16 @@ const AudioPlayer = () => {
   }, [dailyChord]);
 
   useEffect(() => {
-    let newChord = getRandomChord();
-    newChord = {
-      ...newChord,
-      name: newChord.name.replace('4', ''),
-    };
-
-    setDailyChord(newChord);
+    if (path === '/playground') {
+      generateNewChord();
+    }
   }, []);
+
+  useEffect(() => {
+    if (userGuess === dailyChord.name && userGuess !== '') {
+      setHitModal(true);
+    }
+  }, [userGuess, dailyChord.name]);
 
   useEffect(() => {
     if (isToneInitialized) {
@@ -66,6 +72,16 @@ const AudioPlayer = () => {
       setSampler(newSampler);
     }
   }, [isToneInitialized, instrument]);
+
+  const generateNewChord = () => {
+    let newChord = getRandomChord();
+    newChord = {
+      ...newChord,
+      name: newChord.name.replace('4', ''),
+    };
+
+    setDailyChord(newChord);
+  };
 
   const capitalizeFirstLetter = (input: string) => {
     return input.charAt(0).toUpperCase() + input.slice(1);
@@ -135,6 +151,11 @@ const AudioPlayer = () => {
     }
   };
 
+  const handleResetFields = () => {
+    setUserInput('');
+    setUserGuess('');
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!userInput) alert('Field is empty!');
@@ -142,8 +163,27 @@ const AudioPlayer = () => {
     calculateAccuracy(userInput, dailyChord.notes);
   };
 
+  const handleRestartGame = () => {
+    handleResetFields();
+    setHitModal(false);
+    setAccuracy(70);
+    generateNewChord();
+  };
+
   return (
     <div className="bg-[#231C24] w-[95%] rounded-2xl flex-1 flex p-3">
+      {hitModal && (
+        <Modal
+          title="Congratulations!"
+          message={`Great job! You've correctly identified the chord "${dailyChord.name}".`}
+          buttonText={path === '/playground' ? 'Play again' : 'Close'}
+          onClose={
+            path === '/playground'
+              ? handleRestartGame
+              : () => setHitModal(false)
+          }
+        />
+      )}
       <form
         onSubmit={handleSubmit}
         className="w-full flex flex-col gap-3 items-center justify-center"
@@ -156,23 +196,6 @@ const AudioPlayer = () => {
           className={`bg-transparent border-b-8 border-primary text-white text-center font-bold text-8xl py-4 outline-none w-[500px]`}
           disabled={!loaded || !isToneInitialized}
         />
-        {userGuess && (
-          <p
-            className={`text-center text-xl uppercase font-bold ${
-              accuracy === 100
-                ? 'text-[#00F5B5]'
-                : accuracy <= 99 && accuracy >= 90
-                ? 'text-[#4B83D0]'
-                : 'text-[#FB037A]'
-            }`}
-          >
-            {accuracy === 100
-              ? 'Right!'
-              : accuracy <= 99 && accuracy >= 90
-              ? 'Almost!'
-              : 'Wrong!'}
-          </p>
-        )}
         <div className="mt-5 w-full flex justify-center gap-3">
           <MusicButton
             icon={FaPlay}
