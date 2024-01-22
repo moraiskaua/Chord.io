@@ -4,10 +4,19 @@ import InstrumentProvider from '@/contexts/InstrumentContext';
 import AudioPlayer from './components/AudioPlayer';
 import Header from './components/Header';
 import Modal from './components/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const welcomeModal = localStorage.getItem('welcome-modal');
+
+    if (!welcomeModal) {
+      setShowModal(true);
+      localStorage.setItem('welcome-modal', 'true');
+    }
+  }, []);
 
   return (
     <InstrumentProvider>

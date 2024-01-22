@@ -3,11 +3,20 @@
 import InstrumentProvider from '@/contexts/InstrumentContext';
 import Header from '../components/Header';
 import AudioPlayer from '../components/AudioPlayer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '../components/Modal';
 
 const Playground = () => {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const playgroundModal = localStorage.getItem('playground-modal');
+
+    if (!playgroundModal) {
+      setShowModal(true);
+      localStorage.setItem('playground-modal', 'true');
+    }
+  }, []);
 
   return (
     <InstrumentProvider>
