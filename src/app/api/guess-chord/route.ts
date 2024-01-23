@@ -5,13 +5,22 @@ import { NextResponse } from 'next/server';
 export const POST = async req => {
   try {
     const body = await req.json();
-    const { name } = body;
+    const { userEmail, userInput, calculatedPoints } = body;
     const dailyChord = await getNewChord();
 
-    if (name === dailyChord.name) {
+    if (userInput === dailyChord.name) {
       await prisma.dailyChord.update({
         where: { id: dailyChord.id },
-        data: { correct: true },
+        data: { correct: true, user: { connect: { email: userEmail } } },
+      });
+
+      await prisma.user.update({
+        where: {
+          email: userEmail,
+        },
+        data: {
+          points: calculatedPoints,
+        },
       });
 
       return NextResponse.json('Correct chord!', { status: 200 });

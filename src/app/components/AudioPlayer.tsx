@@ -17,6 +17,8 @@ import MusicButton from './MusicButton';
 import Modal from './Modal';
 import { usePathname } from 'next/navigation';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
+import getCurrentUser from '../helpers/getCurrentUser';
 
 interface ChordType {
   name: string;
@@ -32,11 +34,15 @@ const AudioPlayer = () => {
   const [userGuess, setUserGuess] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
   const [accuracy, setAccuracy] = useState(70);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [attempts, setAttempts] = useState(0);
   const [hitModal, setHitModal] = useState(false);
   const [dailyChord, setDailyChord] = useState<ChordType>({
     name: '',
     notes: [],
   });
+
+  const session = useSession();
 
   useEffect(() => {
     console.log('Acorde: ' + dailyChord?.name);
@@ -180,9 +186,30 @@ const AudioPlayer = () => {
     setUserGuess('');
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!userInput) alert('Field is empty!');
+
+    if (path === '/' && attempts < 5) {
+      setAttempts(prevAttempts => prevAttempts + 1);
+
+      if (userInput === dailyChord.name && userInput !== '') {
+        const basePoints = 100;
+        const deduction = 20 * attempts;
+        const calculatedPoints = Math.max(basePoints - deduction, 0);
+        const userEmail = session.data.user.email;
+
+        setIsCorrect(true);
+        setHitModal(true);
+
+        await axios.post('/api/guess-chord', {
+          userEmail,
+          userInput,
+          calculatedPoints,
+        });
+      }
+    }
+
     setUserGuess(userInput);
     calculateAccuracy(userInput, dailyChord.notes);
   };
