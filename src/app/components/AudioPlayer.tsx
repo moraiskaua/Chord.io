@@ -16,6 +16,7 @@ import {
 import MusicButton from './MusicButton';
 import Modal from './Modal';
 import { usePathname } from 'next/navigation';
+import axios from 'axios';
 
 interface ChordType {
   name: string;
@@ -43,16 +44,39 @@ const AudioPlayer = () => {
   }, [dailyChord]);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const lastRequestDate = localStorage.getItem('lastChordRequestDate');
+      const today = new Date().toISOString().split('T')[0];
+
+      if (path === '/' && lastRequestDate !== today) {
+        const { data } = await axios.get('/api/daily-chord');
+        const initialDailyChord = data;
+        setDailyChord(initialDailyChord);
+
+        // Atualizar a data da última requisição no localStorage
+        localStorage.setItem('lastChordRequestDate', today);
+
+        // Salvar o acorde no localStorage
+        localStorage.setItem('dailyChord', JSON.stringify(initialDailyChord));
+      }
+    };
+
+    setDailyChord(JSON.parse(localStorage.getItem('dailyChord')));
+
+    fetchData();
+  }, [path]);
+
+  useEffect(() => {
     if (path === '/playground') {
       generateNewChord();
     }
-  }, []);
+  }, [path]);
 
   useEffect(() => {
     if (userGuess === dailyChord.name && userGuess !== '') {
       setHitModal(true);
     }
-  }, [userGuess, dailyChord.name]);
+  }, [userGuess, dailyChord?.name]);
 
   useEffect(() => {
     if (isToneInitialized) {
