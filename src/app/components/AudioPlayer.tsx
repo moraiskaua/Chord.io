@@ -192,8 +192,10 @@ const AudioPlayer = () => {
 
     if (path === '/' && attempts < 5) {
       setAttempts(prevAttempts => prevAttempts + 1);
+      setUserGuess(userInput);
+      calculateAccuracy(userInput, dailyChord.notes);
 
-      if (userInput === dailyChord.name && userInput !== '') {
+      if (userInput === dailyChord.name) {
         const basePoints = 100;
         const deduction = 20 * attempts;
         const calculatedPoints = Math.max(basePoints - deduction, 0);
@@ -209,9 +211,6 @@ const AudioPlayer = () => {
         });
       }
     }
-
-    setUserGuess(userInput);
-    calculateAccuracy(userInput, dailyChord.notes);
   };
 
   const handleRestartGame = () => {

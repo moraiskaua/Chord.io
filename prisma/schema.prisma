@@ -22,7 +22,7 @@ model User {
   updatedAt    DateTime @updatedAt
 
   accounts   Account[]
-  dailyChord DailyChord? @relation(fields: [dailyChordId], references: [id])
+  UserChords UserChord[]
 }
 
 model Account {
@@ -46,11 +46,22 @@ model Account {
 }
 
 model DailyChord {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  name    String
-  notes   String[]
-  correct Boolean?
-  date    DateTime @default(now())
+  id    String   @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  notes String[]
+  date  DateTime @default(now())
 
-  user User[]
+  userChords UserChord[]
+}
+
+model UserChord {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  dailyChordId String   @db.ObjectId
+  correct      Boolean?
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dailyChord DailyChord @relation(fields: [dailyChordId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dailyChordId])
 }
