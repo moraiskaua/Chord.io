@@ -69,7 +69,6 @@ const getNewChord = async () => {
       data: {
         name: newChord.name,
         notes: newChord.notes,
-        correct: false,
         date: today,
       },
     });

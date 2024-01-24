@@ -7,11 +7,36 @@ export const POST = async req => {
     const body = await req.json();
     const { userEmail, userInput, calculatedPoints } = body;
     const dailyChord = await getNewChord();
+    const user = await prisma.user.findUnique({
+      where: {
+        email: userEmail,
+      },
+    });
+
+    if (!user) {
+      return new NextResponse('User not found', { status: 404 });
+    }
+
+    const existingUserChord = await prisma.userChord.findFirst({
+      where: {
+        userId: user.id,
+        dailyChordId: dailyChord.id,
+      },
+    });
+
+    if (existingUserChord && existingUserChord.correct) {
+      return NextResponse.json('User already answered correctly', {
+        status: 200,
+      });
+    }
 
     if (userInput === dailyChord.name) {
-      await prisma.dailyChord.update({
-        where: { id: dailyChord.id },
-        data: { correct: true, user: { connect: { email: userEmail } } },
+      await prisma.userChord.create({
+        data: {
+          userId: user.id,
+          dailyChordId: dailyChord.id,
+          correct: true,
+        },
       });
 
       await prisma.user.update({
@@ -19,7 +44,7 @@ export const POST = async req => {
           email: userEmail,
         },
         data: {
-          points: calculatedPoints,
+          points: user.points + calculatedPoints,
         },
       });
 
