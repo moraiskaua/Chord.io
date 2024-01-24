@@ -31,22 +31,25 @@ export const POST = async req => {
     }
 
     if (userInput === dailyChord.name) {
-      await prisma.userChord.create({
-        data: {
-          userId: user.id,
-          dailyChordId: dailyChord.id,
-          correct: true,
-        },
-      });
-
-      await prisma.user.update({
-        where: {
-          email: userEmail,
-        },
-        data: {
-          points: user.points + calculatedPoints,
-        },
-      });
+      await prisma.$transaction([
+        prisma.userChord.create({
+          data: {
+            userId: user.id,
+            dailyChordId: dailyChord.id,
+            correct: userInput === dailyChord.name,
+          },
+        }),
+        prisma.user.update({
+          where: {
+            email: userEmail,
+          },
+          data: {
+            points: {
+              increment: calculatedPoints,
+            },
+          },
+        }),
+      ]);
 
       return NextResponse.json('Correct chord!', { status: 200 });
     }
