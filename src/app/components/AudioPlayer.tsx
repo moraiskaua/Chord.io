@@ -188,7 +188,11 @@ const AudioPlayer = () => {
       setUserGuess(userInput);
       calculateAccuracy(userInput, dailyChord.notes);
 
-      if (userInput === dailyChord.name && userInput !== '') {
+      if (userInput === dailyChord.name && !session.data.user) {
+        setHitModal(true);
+      }
+
+      if (userInput === dailyChord.name) {
         const basePoints = 100;
         const deduction = 20 * attempts;
         const calculatedPoints = Math.max(basePoints - deduction, 0);
