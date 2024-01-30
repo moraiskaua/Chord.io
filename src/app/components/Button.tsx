@@ -5,18 +5,16 @@ import { ReactNode } from 'react';
 interface ButtonProps {
   fullWidth: boolean;
   children?: ReactNode;
-  danger?: boolean;
   disabled?: boolean;
   onClick?: () => void;
 }
 
-const Button = ({
+const Button: React.FC<ButtonProps> = ({
   fullWidth,
   children,
-  danger,
   disabled,
   onClick,
-}: ButtonProps) => {
+}) => {
   return (
     <button
       onClick={onClick}

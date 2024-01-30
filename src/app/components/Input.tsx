@@ -12,7 +12,7 @@ interface InputProps {
   register: UseFormRegister<FieldValues>;
 }
 
-const Input = ({
+const Input: React.FC<InputProps> = ({
   label,
   id,
   type,
@@ -20,7 +20,7 @@ const Input = ({
   disabled,
   errors,
   register,
-}: InputProps) => {
+}) => {
   return (
     <div>
       <label

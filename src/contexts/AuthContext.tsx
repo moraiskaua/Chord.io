@@ -7,7 +7,7 @@ interface AuthContextProps {
   children: ReactNode;
 }
 
-const AuthContext = ({ children }: AuthContextProps) => {
+const AuthContext: React.FC<AuthContextProps> = ({ children }) => {
   return <SessionProvider>{children}</SessionProvider>;
 };
 
