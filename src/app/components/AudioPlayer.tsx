@@ -47,7 +47,15 @@ const AudioPlayer = () => {
       const lastRequestDate = localStorage.getItem('lastChordRequestDate');
       const today = new Date().toISOString().split('T')[0];
 
-      if (path === '/' && lastRequestDate !== today) {
+      if (path === '/') {
+        if (lastRequestDate === today) {
+          const initialDailyChord = JSON.parse(
+            localStorage.getItem('dailyChord'),
+          );
+          setDailyChord(initialDailyChord);
+          return;
+        }
+
         const { data } = await axios.get('/api/daily-chord');
         const initialDailyChord = data;
         setDailyChord(initialDailyChord);
