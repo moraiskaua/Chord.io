@@ -195,7 +195,7 @@ const AudioPlayer = () => {
     calculateAccuracy(userInput, dailyChord.notes);
 
     if (userInput === dailyChord.name && !session.data?.user) {
-      setHitModal(true);
+      return setHitModal(true);
     }
 
     if (path === '/' && attempts < 5) {
