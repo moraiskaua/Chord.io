@@ -34,14 +34,14 @@ const Leaderboard = () => {
         </Link>
       </header>
       <table className="w-full h-full text-white">
-        <thead>
+        <thead className="bg-tertiary">
           <tr>
             <th>Rank</th>
             <th>Name</th>
             <th>Points</th>
           </tr>
         </thead>
-        <tbody className="align-top text-center h-full">
+        <tbody className="align-top text-center h-full shadow-custom bg-tertiary">
           {users.map((user, index) => (
             <tr key={user.id}>
               <td>{index + 1}</td>
