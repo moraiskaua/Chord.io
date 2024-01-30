@@ -183,20 +183,21 @@ const AudioPlayer = () => {
     e.preventDefault();
     if (!userInput) alert('Field is empty!');
 
+    setUserGuess(userInput);
+    calculateAccuracy(userInput, dailyChord.notes);
+
+    if (userInput === dailyChord.name && !session.data?.user) {
+      setHitModal(true);
+    }
+
     if (path === '/' && attempts < 5) {
       setAttempts(prevAttempts => prevAttempts + 1);
-      setUserGuess(userInput);
-      calculateAccuracy(userInput, dailyChord.notes);
-
-      if (userInput === dailyChord.name && !session.data.user) {
-        setHitModal(true);
-      }
 
       if (userInput === dailyChord.name) {
         const basePoints = 100;
         const deduction = 20 * attempts;
         const calculatedPoints = Math.max(basePoints - deduction, 0);
-        const userEmail = session.data.user.email;
+        const userEmail = session.data?.user.email;
         setHitModal(true);
 
         await axios.post('/api/guess-chord', {
