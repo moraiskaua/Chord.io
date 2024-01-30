@@ -23,39 +23,51 @@ const Header = () => {
         {session.status === 'authenticated' ? (
           <BiExit
             size={35}
-            className="cursor-pointer"
+            className="cursor-pointer hover:scale-110 transition-all duration-300"
             onClick={() => signOut()}
           />
         ) : (
           <Link href="/sign-in">
-            <BiUser size={30} />
+            <BiUser
+              size={30}
+              className="cursor-pointer hover:scale-110 transition-all duration-300"
+            />
           </Link>
         )}
         {pathname === '/playground' ? (
           <Link href="/">
-            <HiCalendarDays size={35} />
+            <HiCalendarDays
+              size={35}
+              className="cursor-pointer hover:scale-110 transition-all duration-300"
+            />
           </Link>
         ) : (
           <Link href="/playground">
-            <GiSandCastle size={35} />
+            <GiSandCastle
+              size={35}
+              className="cursor-pointer hover:scale-110 transition-all duration-300"
+            />
           </Link>
         )}
       </div>
       <h1>CHORD.IO</h1>
       <div className="flex gap-4 items-center">
         <Link href="/leaderboard">
-          <MdLeaderboard size={35} />
+          <MdLeaderboard
+            size={35}
+            className="cursor-pointer hover:scale-110 transition-all duration-300"
+          />
         </Link>
         {instrument === 'piano' ? (
           <CgPiano
             size={35}
-            className="cursor-pointer hover:scale-125 transition-all duration-300"
+            className="cursor-pointer hover:scale-110 transition-all duration-300"
             onClick={() => setInstrument(prev => 'guitar-acoustic')}
           />
         ) : (
           <FaGuitar
             size={30}
-            className="cursor-pointer hover:scale-125 transition-all duration-300"
+            className="cursor-pointer hover:scale-110 transition-all duration-300"
             onClick={() => setInstrument(prev => 'piano')}
           />
         )}
