@@ -43,7 +43,9 @@ const Header = () => {
       </div>
       <h1>CHORD.IO</h1>
       <div className="flex gap-4 items-center">
-        <MdLeaderboard size={35} />
+        <Link href="/leaderboard">
+          <MdLeaderboard size={35} />
+        </Link>
         {instrument === 'piano' ? (
           <CgPiano
             size={35}
