@@ -3,9 +3,22 @@
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { User } from '@prisma/client';
+import axios from 'axios';
 
 const Leaderboard = () => {
+  const [users, setUsers] = useState<User[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const { data } = await axios.get('/api/get-users');
+      setUsers(data);
+    };
+
+    fetchUsers();
+  }, []);
 
   return (
     <>
@@ -29,16 +42,13 @@ const Leaderboard = () => {
           </tr>
         </thead>
         <tbody className="align-top text-center h-full">
-          <tr>
-            <td>1</td>
-            <td>Kauã</td>
-            <td>200</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Kauã</td>
-            <td>100</td>
-          </tr>
+          {users.map((user, index) => (
+            <tr key={user.id}>
+              <td>{index + 1}</td>
+              <td>{user.name}</td>
+              <td>{user.points}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </>
