@@ -11,6 +11,7 @@ import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { BiUser } from 'react-icons/bi';
 import { RxExit } from 'react-icons/rx';
+import { IoMdSettings, IoMdHelpCircle } from 'react-icons/io';
 import { GiPerspectiveDiceSixFacesRandom as LuckyCube } from 'react-icons/gi';
 
 const Header = () => {
@@ -50,15 +51,6 @@ const Header = () => {
             />
           </Link>
         )}
-      </div>
-      <h1>CHORD.IO</h1>
-      <div className="flex gap-4 items-center">
-        <Link href="/leaderboard">
-          <MdLeaderboard
-            size={35}
-            className="cursor-pointer hover:scale-110 transition-all duration-300"
-          />
-        </Link>
         {instrument === 'piano' ? (
           <CgPiano
             size={35}
@@ -72,6 +64,23 @@ const Header = () => {
             onClick={() => setInstrument(prev => 'piano')}
           />
         )}
+      </div>
+      <h1>CHORD.IO</h1>
+      <div className="flex gap-4 items-center">
+        <IoMdHelpCircle
+          size={35}
+          className="cursor-pointer hover:scale-110 transition-all duration-300"
+        />
+        <Link href="/leaderboard">
+          <MdLeaderboard
+            size={35}
+            className="cursor-pointer hover:scale-110 transition-all duration-300"
+          />
+        </Link>
+        <IoMdSettings
+          size={35}
+          className="cursor-pointer hover:scale-110 transition-all duration-300"
+        />
       </div>
     </header>
   );
