@@ -32,7 +32,9 @@ const AudioPlayer = () => {
   const [userInput, setUserInput] = useState<string>('');
   const [accuracy, setAccuracy] = useState(70);
   const [attempts, setAttempts] = useState(0);
+  const [isCorrect, setIsCorrect] = useState(false);
   const [hitModal, setHitModal] = useState(false);
+  const [isCorrectModal, setIsCorrectModal] = useState(false);
   const [dailyChord, setDailyChord] = useState<ChordType>({
     name: '',
     notes: [],
@@ -56,6 +58,8 @@ const AudioPlayer = () => {
         if (lastRequestDate === today && localStorage.getItem('dailyChord')) {
           setAttempts(JSON.parse(localStorage.getItem('attempts')));
           setDailyChord(JSON.parse(localStorage.getItem('dailyChord')));
+          setIsCorrectModal(localStorage.getItem('chordIsCorrect') === 'true');
+          setIsCorrect(localStorage.getItem('chordIsCorrect') === 'true');
 
           return;
         }
@@ -177,6 +181,8 @@ const AudioPlayer = () => {
         const deduction = 20 * attempts;
         const calculatedPoints = Math.max(100 - deduction, 0);
         const userEmail = session.data?.user.email;
+        localStorage.setItem('chordIsCorrect', 'true');
+        setIsCorrect(true);
         setHitModal(true);
 
         await axios.post('/api/guess-chord', {
@@ -198,6 +204,14 @@ const AudioPlayer = () => {
 
   return (
     <div className="bg-[#231C24] w-[95%] rounded-2xl flex-1 flex p-3">
+      {path === '/' && isCorrectModal && (
+        <Modal
+          title="Congratulations!"
+          message="You've already hit the chord of the day!."
+          buttonText="Close"
+          onClose={() => setIsCorrectModal(false)}
+        />
+      )}
       {hitModal && (
         <Modal
           title="Congratulations!"
@@ -220,26 +234,32 @@ const AudioPlayer = () => {
           onChange={e => setUserInput(capitalizeFirstLetter(e.target.value))}
           placeholder="Ex: F#m"
           className={`bg-transparent border-b-8 border-primary text-white text-center font-bold text-8xl py-4 outline-none w-[500px] disabled:opacity-50 disabled:pointer-events-none`}
-          disabled={!loaded || !isToneInitialized || attempts > 4}
+          disabled={!loaded || !isToneInitialized || attempts > 4 || isCorrect}
         />
         <div className="mt-5 w-full flex justify-center gap-3">
           <MusicButton
             icon={FaPlay}
             size={60}
-            disabled={!loaded || !isToneInitialized || attempts > 4}
+            disabled={
+              !loaded || !isToneInitialized || attempts > 4 || isCorrect
+            }
             onClick={() => playChord(dailyChord)}
           />
           <MusicButton
             icon={GiMusicalNotes}
             size={60}
-            disabled={!loaded || !isToneInitialized || attempts > 4}
+            disabled={
+              !loaded || !isToneInitialized || attempts > 4 || isCorrect
+            }
             onClick={() => playChordArpeggiated(dailyChord)}
           />
           <MusicButton
             icon={FaArrowTurnDown}
             variant="secondary"
             text="Enter"
-            disabled={!loaded || !isToneInitialized || attempts > 4}
+            disabled={
+              !loaded || !isToneInitialized || attempts > 4 || isCorrect
+            }
           />
         </div>
       </form>
