@@ -53,11 +53,9 @@ const AudioPlayer = () => {
       const today = new Date().toISOString().split('T')[0];
 
       if (path === '/') {
-        if (lastRequestDate === today) {
-          const initialDailyChord = JSON.parse(
-            localStorage.getItem('dailyChord'),
-          );
-          setDailyChord(initialDailyChord);
+        if (lastRequestDate === today && localStorage.getItem('dailyChord')) {
+          setAttempts(JSON.parse(localStorage.getItem('attempts')));
+          setDailyChord(JSON.parse(localStorage.getItem('dailyChord')));
 
           return;
         }
@@ -72,8 +70,6 @@ const AudioPlayer = () => {
         localStorage.setItem('dailyChord', JSON.stringify(data));
       }
     };
-
-    setDailyChord(JSON.parse(localStorage.getItem('dailyChord')));
 
     getChordData();
   }, [path]);
@@ -175,6 +171,7 @@ const AudioPlayer = () => {
 
     if (path === '/' && attempts < 5) {
       setAttempts(prevAttempts => prevAttempts + 1);
+      localStorage.setItem('attempts', JSON.stringify(attempts + 1));
 
       if (userInput === dailyChord.name) {
         const deduction = 20 * attempts;
@@ -222,24 +219,27 @@ const AudioPlayer = () => {
           value={userInput}
           onChange={e => setUserInput(capitalizeFirstLetter(e.target.value))}
           placeholder="Ex: F#m"
-          className={`bg-transparent border-b-8 border-primary text-white text-center font-bold text-8xl py-4 outline-none w-[500px]`}
-          disabled={!loaded || !isToneInitialized}
+          className={`bg-transparent border-b-8 border-primary text-white text-center font-bold text-8xl py-4 outline-none w-[500px] disabled:opacity-50 disabled:pointer-events-none`}
+          disabled={!loaded || !isToneInitialized || attempts > 0}
         />
         <div className="mt-5 w-full flex justify-center gap-3">
           <MusicButton
             icon={FaPlay}
             size={60}
+            disabled={!loaded || !isToneInitialized || attempts > 0}
             onClick={() => playChord(dailyChord)}
           />
           <MusicButton
             icon={GiMusicalNotes}
             size={60}
+            disabled={!loaded || !isToneInitialized || attempts > 0}
             onClick={() => playChordArpeggiated(dailyChord)}
           />
           <MusicButton
             icon={FaArrowTurnDown}
             variant="secondary"
             text="Enter"
+            disabled={!loaded || !isToneInitialized || attempts > 0}
           />
         </div>
       </form>

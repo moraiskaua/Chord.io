@@ -13,6 +13,7 @@ const MusicButton: React.FC<MusicButtonProps> = ({
   icon: Icon,
   size,
   text,
+  disabled,
   ...props
 }) => {
   return (
@@ -21,7 +22,9 @@ const MusicButton: React.FC<MusicButtonProps> = ({
         variant === 'secondary'
           ? 'bg-[#8C52B9] text-white border-2 border-primary rounded-2xl p-6 uppercase font-bold flex flex-col justify-center items-center gap-2'
           : 'bg-[#C47BFD] text-[#8C52B9]'
-      } p-6 rounded-2xl`}
+      }
+      ${disabled && 'opacity-50 pointer-events-none'}
+      p-6 rounded-2xl`}
       type={variant === 'secondary' ? 'submit' : 'button'}
       {...props}
     >
