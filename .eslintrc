@@ -28,7 +28,12 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["@typescript-eslint", "simple-import-sort", "prettier"],
+  "plugins": [
+    "@typescript-eslint",
+    "simple-import-sort",
+    "prettier",
+    "plugin:react-hooks/recommended"
+  ],
   "rules": {
     "linebreak-style": ["error", "unix"],
     "no-console": "warn",
