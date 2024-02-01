@@ -1,10 +1,16 @@
 import getNewChord from '@/app/helpers/getNewChord';
 import { prisma } from '@/database/prismadb';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export const POST = async req => {
+interface IGuessChordBody {
+  userEmail: string;
+  userInput: string;
+  calculatedPoints: number;
+}
+
+export const POST = async (req: NextRequest) => {
   try {
-    const body = await req.json();
+    const body: IGuessChordBody = await req.json();
     const { userEmail, userInput, calculatedPoints } = body;
     const dailyChord = await getNewChord();
     const user = await prisma.user.findUnique({
