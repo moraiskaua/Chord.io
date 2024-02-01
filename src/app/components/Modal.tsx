@@ -1,5 +1,7 @@
 import React from 'react';
 import { IoCloseCircleSharp } from 'react-icons/io5';
+import { ImHappy2 } from 'react-icons/im';
+import { usePathname } from 'next/navigation';
 
 interface ModalProps {
   title: string;
@@ -18,6 +20,8 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   onGoToPlayground,
 }) => {
+  const path = usePathname();
+
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50"
@@ -34,7 +38,10 @@ const Modal: React.FC<ModalProps> = ({
             onClick={onClose}
           />
         </div>
-        <h2 className="text-2xl font-bold mb-3">{title}</h2>
+        <h2 className="text-2xl font-bold mb-3 flex items-center gap-2.5">
+          {title}
+          {path === '/playground' && <ImHappy2 className="text-yellow-400" />}
+        </h2>
         <p className="text-gray-300">
           {message} <span className="text-primary font-bold">{chord}</span>
         </p>
