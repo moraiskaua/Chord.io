@@ -149,17 +149,13 @@ const AudioPlayer = () => {
       totalDistance += distance;
     }
 
-    if (userNotes === dailyNotes) {
-      return setAccuracy(prev => accuracyPercentage);
-    }
-
     // Calcula a pontuação com base na distância total
     const accuracyPercentage = calculateOverallAccuracy(
       totalDistance,
       userNotes.length,
     );
 
-    setAccuracy(prev => accuracyPercentage);
+    setAccuracy(accuracyPercentage);
   };
 
   const playChord = ({ notes }: ChordType): void => {
