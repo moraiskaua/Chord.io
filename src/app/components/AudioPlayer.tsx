@@ -62,14 +62,13 @@ const AudioPlayer = () => {
         }
 
         const { data } = await axios.get('/api/daily-chord');
-        const initialDailyChord = data;
-        setDailyChord(initialDailyChord);
+        setDailyChord(data);
 
         // Atualizar a data da última requisição no localStorage
         localStorage.setItem('lastChordRequestDate', today);
 
         // Salvar o acorde no localStorage
-        localStorage.setItem('dailyChord', JSON.stringify(initialDailyChord));
+        localStorage.setItem('dailyChord', JSON.stringify(data));
       }
     };
 
