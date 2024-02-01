@@ -176,11 +176,6 @@ const AudioPlayer = () => {
     }
   };
 
-  const handleResetFields = () => {
-    setUserInput('');
-    setUserGuess('');
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!userInput) alert('Field is empty!');
@@ -196,9 +191,8 @@ const AudioPlayer = () => {
       setAttempts(prevAttempts => prevAttempts + 1);
 
       if (userInput === dailyChord.name) {
-        const basePoints = 100;
         const deduction = 20 * attempts;
-        const calculatedPoints = Math.max(basePoints - deduction, 0);
+        const calculatedPoints = Math.max(100 - deduction, 0);
         const userEmail = session.data?.user.email;
         setHitModal(true);
 
@@ -212,7 +206,8 @@ const AudioPlayer = () => {
   };
 
   const handleRestartGame = () => {
-    handleResetFields();
+    setUserInput('');
+    setUserGuess('');
     setHitModal(false);
     setAccuracy(70);
     generateNewChord();
