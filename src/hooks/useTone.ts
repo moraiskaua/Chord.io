@@ -1,38 +1,29 @@
 'use client';
 
+import {
+  notesPossibilities,
+  toneNotesPossibilities,
+} from '@/utils/notesPossibilities';
 import { useEffect, useState } from 'react';
 import * as Tone from 'tone';
 
-const possibleNotes = [
-  'C4',
-  'C#4',
-  'D4',
-  'D#4',
-  'E4',
-  'F4',
-  'F#4',
-  'G4',
-  'G#4',
-  'A4',
-  'A#4',
-  'B4',
-];
-
 export const getRandomChord = () => {
-  const randomNoteIndex = Math.floor(Math.random() * possibleNotes.length);
-  const randomNote = possibleNotes[randomNoteIndex];
+  const randomNoteIndex = Math.floor(
+    Math.random() * toneNotesPossibilities.length,
+  );
+  const randomNote = toneNotesPossibilities[randomNoteIndex];
   const chordType = Math.random() < 0.5 ? '' : 'm';
 
   let chordName = '';
   const chordNotes = [];
-  const rootIndex = possibleNotes.indexOf(randomNote);
+  const rootIndex = toneNotesPossibilities.indexOf(randomNote);
 
   const thirdNoteIndex = (rootIndex + (chordType === 'm' ? 3 : 4)) % 12; // Terça menor ou maior
   const fifthNoteIndex = (rootIndex + 7) % 12; // Quinta perfeita
 
-  chordNotes.push(possibleNotes[rootIndex]);
-  chordNotes.push(possibleNotes[thirdNoteIndex]);
-  chordNotes.push(possibleNotes[fifthNoteIndex]);
+  chordNotes.push(toneNotesPossibilities[rootIndex]);
+  chordNotes.push(toneNotesPossibilities[thirdNoteIndex]);
+  chordNotes.push(toneNotesPossibilities[fifthNoteIndex]);
 
   switch (chordType) {
     case 'm':
@@ -50,41 +41,26 @@ export const getRandomChord = () => {
 };
 
 export const getChordNotes = (chordName: string): string[] => {
-  const possibilities = [
-    'C',
-    'C#',
-    'D',
-    'D#',
-    'E',
-    'F',
-    'F#',
-    'G',
-    'G#',
-    'A',
-    'A#',
-    'B',
-  ];
-
   const [rootNote, sharp] = chordName.split('#');
   const isMinor = chordName.includes('m');
 
-  let rootIndex = possibilities.indexOf(rootNote);
+  let rootIndex = notesPossibilities.indexOf(rootNote);
 
   if (sharp) {
-    rootIndex = possibilities.indexOf(rootNote + '#');
+    rootIndex = notesPossibilities.indexOf(rootNote + '#');
   } else if (isMinor) {
-    rootIndex = possibilities.indexOf(rootNote.slice(0, -1));
+    rootIndex = notesPossibilities.indexOf(rootNote.slice(0, -1));
   } else {
-    rootIndex = possibilities.indexOf(chordName);
+    rootIndex = notesPossibilities.indexOf(chordName);
   }
 
   const thirdNoteIndex = (rootIndex + (isMinor ? 3 : 4)) % 12; // Terça menor ou maior
   const fifthNoteIndex = (rootIndex + 7) % 12; // Quinta perfeita
 
   return [
-    possibilities[rootIndex],
-    possibilities[thirdNoteIndex],
-    possibilities[fifthNoteIndex],
+    notesPossibilities[rootIndex],
+    notesPossibilities[thirdNoteIndex],
+    notesPossibilities[fifthNoteIndex],
   ];
 };
 

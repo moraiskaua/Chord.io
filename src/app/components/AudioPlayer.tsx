@@ -18,6 +18,7 @@ import Modal from './Modal';
 import { usePathname } from 'next/navigation';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
+import { notesPossibilities } from '@/utils/notesPossibilities';
 
 interface ChordType {
   name: string;
@@ -117,21 +118,6 @@ const AudioPlayer = () => {
   };
 
   const calculateAccuracy = (userGuess: string, correctNotes: string[]) => {
-    const possibilities = [
-      'C',
-      'C#',
-      'D',
-      'D#',
-      'E',
-      'F',
-      'F#',
-      'G',
-      'G#',
-      'A',
-      'A#',
-      'B',
-    ];
-
     const dailyNotes = correctNotes.map(note => note.replace('4', ''));
     const userNotes = getChordNotes(userGuess);
 
@@ -144,7 +130,7 @@ const AudioPlayer = () => {
       const distance = calculateCircularNoteDistance(
         userNote,
         correctNote,
-        possibilities,
+        notesPossibilities,
       );
       totalDistance += distance;
     }
