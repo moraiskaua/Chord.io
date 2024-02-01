@@ -25,9 +25,6 @@ interface ChordType {
 }
 
 const AudioPlayer = () => {
-  const path = usePathname();
-  const { instrument } = useContext(InstrumentContext);
-  const { isToneInitialized } = useTone();
   const [loaded, setLoaded] = useState(false);
   const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
   const [userGuess, setUserGuess] = useState<string>('');
@@ -40,7 +37,10 @@ const AudioPlayer = () => {
     notes: [],
   });
 
+  const { instrument } = useContext(InstrumentContext);
+  const { isToneInitialized } = useTone();
   const session = useSession();
+  const path = usePathname();
 
   useEffect(() => {
     const fetchData = async () => {
