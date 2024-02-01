@@ -43,7 +43,11 @@ const AudioPlayer = () => {
   const path = usePathname();
 
   useEffect(() => {
-    const fetchData = async () => {
+    if (path === '/playground') {
+      return generateNewChord();
+    }
+
+    const getChordData = async () => {
       const lastRequestDate = localStorage.getItem('lastChordRequestDate');
       const today = new Date().toISOString().split('T')[0];
 
@@ -53,6 +57,7 @@ const AudioPlayer = () => {
             localStorage.getItem('dailyChord'),
           );
           setDailyChord(initialDailyChord);
+
           return;
         }
 
@@ -70,13 +75,7 @@ const AudioPlayer = () => {
 
     setDailyChord(JSON.parse(localStorage.getItem('dailyChord')));
 
-    fetchData();
-  }, [path]);
-
-  useEffect(() => {
-    if (path === '/playground') {
-      generateNewChord();
-    }
+    getChordData();
   }, [path]);
 
   useEffect(() => {
