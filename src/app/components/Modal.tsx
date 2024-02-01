@@ -38,10 +38,12 @@ const Modal: React.FC<ModalProps> = ({
             onClick={onClose}
           />
         </div>
-        <h2 className="text-2xl font-bold mb-3 flex items-center gap-2.5">
-          {title}
-          {path === '/playground' && <ImHappy2 className="text-yellow-400" />}
-        </h2>
+        <div className="flex items-center justify-center mb-3 text-2xl">
+          <h2 className="font-bold">{title}</h2>
+          {path === '/playground' && (
+            <ImHappy2 className="ml-2.5 text-yellow-400 " />
+          )}
+        </div>
         <p className="text-gray-300">
           {message} <span className="text-primary font-bold">{chord}</span>
         </p>
