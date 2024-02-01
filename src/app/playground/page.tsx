@@ -22,6 +22,7 @@ const Playground = () => {
     <InstrumentProvider>
       {showModal && (
         <Modal
+          variant="playground"
           title="Welcome to the playground!"
           message="Here you can guess as many chords as you want."
           onClose={() => setShowModal(false)}

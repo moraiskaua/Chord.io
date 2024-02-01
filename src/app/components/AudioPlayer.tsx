@@ -207,6 +207,7 @@ const AudioPlayer = () => {
     <div className="bg-[#231C24] w-[95%] rounded-2xl flex-1 flex p-3">
       {path === '/' && isCorrectModal && (
         <Modal
+          variant="home"
           title="Congratulations!"
           message="You've already hit the chord of the day!"
           buttonText="Go to Playground"
@@ -219,6 +220,7 @@ const AudioPlayer = () => {
       )}
       {hitModal && (
         <Modal
+          variant="home"
           title="Congratulations!"
           message={`Great job! You've correctly identified the chord`}
           chord={dailyChord.name}
