@@ -6,11 +6,12 @@ import { FaGuitar } from 'react-icons/fa';
 import { useContext } from 'react';
 import { InstrumentContext } from '@/contexts/InstrumentContext';
 import { HiCalendarDays } from 'react-icons/hi2';
-import { GiSandCastle } from 'react-icons/gi';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
-import { BiExit, BiUser } from 'react-icons/bi';
+import { BiUser } from 'react-icons/bi';
+import { RxExit } from 'react-icons/rx';
+import { GiPerspectiveDiceSixFacesRandom as LuckyCube } from 'react-icons/gi';
 
 const Header = () => {
   const { instrument, setInstrument } = useContext(InstrumentContext);
@@ -21,7 +22,7 @@ const Header = () => {
     <header className="w-full uppercase text-primary font-bold text-7xl flex justify-around items-center h-40">
       <div className="flex gap-4 items-center">
         {session.status === 'authenticated' ? (
-          <BiExit
+          <RxExit
             size={35}
             className="cursor-pointer hover:scale-110 transition-all duration-300"
             onClick={() => signOut()}
@@ -43,8 +44,8 @@ const Header = () => {
           </Link>
         ) : (
           <Link href="/playground">
-            <GiSandCastle
-              size={35}
+            <LuckyCube
+              size={45}
               className="cursor-pointer hover:scale-110 transition-all duration-300"
             />
           </Link>
@@ -66,7 +67,7 @@ const Header = () => {
           />
         ) : (
           <FaGuitar
-            size={30}
+            size={35}
             className="cursor-pointer hover:scale-110 transition-all duration-300"
             onClick={() => setInstrument(prev => 'piano')}
           />
