@@ -160,7 +160,7 @@ const AudioPlayer = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!userInput) alert('Field is empty!');
+    if (!userInput) return alert('Field is empty!');
 
     setUserGuess(userInput);
     calculateAccuracy(userInput, dailyChord.notes);
@@ -220,26 +220,26 @@ const AudioPlayer = () => {
           onChange={e => setUserInput(capitalizeFirstLetter(e.target.value))}
           placeholder="Ex: F#m"
           className={`bg-transparent border-b-8 border-primary text-white text-center font-bold text-8xl py-4 outline-none w-[500px] disabled:opacity-50 disabled:pointer-events-none`}
-          disabled={!loaded || !isToneInitialized || attempts > 0}
+          disabled={!loaded || !isToneInitialized || attempts > 4}
         />
         <div className="mt-5 w-full flex justify-center gap-3">
           <MusicButton
             icon={FaPlay}
             size={60}
-            disabled={!loaded || !isToneInitialized || attempts > 0}
+            disabled={!loaded || !isToneInitialized || attempts > 4}
             onClick={() => playChord(dailyChord)}
           />
           <MusicButton
             icon={GiMusicalNotes}
             size={60}
-            disabled={!loaded || !isToneInitialized || attempts > 0}
+            disabled={!loaded || !isToneInitialized || attempts > 4}
             onClick={() => playChordArpeggiated(dailyChord)}
           />
           <MusicButton
             icon={FaArrowTurnDown}
             variant="secondary"
             text="Enter"
-            disabled={!loaded || !isToneInitialized || attempts > 0}
+            disabled={!loaded || !isToneInitialized || attempts > 4}
           />
         </div>
       </form>
