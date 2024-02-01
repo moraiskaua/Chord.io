@@ -15,7 +15,7 @@ import {
 } from '@/utils/calculateAccurancy';
 import MusicButton from './MusicButton';
 import Modal from './Modal';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { notesPossibilities } from '@/utils/notesPossibilities';
@@ -44,6 +44,7 @@ const AudioPlayer = () => {
   const { isToneInitialized } = useTone();
   const session = useSession();
   const path = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     if (path === '/playground') {
@@ -207,16 +208,21 @@ const AudioPlayer = () => {
       {path === '/' && isCorrectModal && (
         <Modal
           title="Congratulations!"
-          message="You've already hit the chord of the day!."
-          buttonText="Close"
+          message="You've already hit the chord of the day!"
+          buttonText="Go to Playground"
           onClose={() => setIsCorrectModal(false)}
+          onGoToPlayground={() => {
+            setIsCorrectModal(false);
+            router.push('/playground');
+          }}
         />
       )}
       {hitModal && (
         <Modal
           title="Congratulations!"
-          message={`Great job! You've correctly identified the chord "${dailyChord.name}".`}
-          buttonText={path === '/playground' ? 'Play again' : 'Close'}
+          message={`Great job! You've correctly identified the chord`}
+          chord={dailyChord.name}
+          buttonText={path === '/playground' && 'Play again'}
           onClose={
             path === '/playground'
               ? handleRestartGame

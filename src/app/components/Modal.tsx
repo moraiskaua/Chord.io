@@ -1,17 +1,22 @@
 import React from 'react';
+import { IoCloseCircleSharp } from 'react-icons/io5';
 
 interface ModalProps {
   title: string;
   message: string;
+  chord?: string;
   buttonText?: string;
   onClose: () => void;
+  onGoToPlayground?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
   title,
   message,
+  chord,
   buttonText,
   onClose,
+  onGoToPlayground,
 }) => {
   return (
     <div
@@ -19,17 +24,28 @@ const Modal: React.FC<ModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="bg-[#231C24] text-white p-8 rounded-md shadow-lg text-center"
+        className="bg-[#231C24] text-white p-8 rounded-md shadow-lg text-center relative"
         onClick={e => e.stopPropagation()}
       >
+        <div className="absolute -top-6 -right-6 p-2 rounded-full">
+          <IoCloseCircleSharp
+            size={40}
+            className="cursor-pointer"
+            onClick={onClose}
+          />
+        </div>
         <h2 className="text-2xl font-bold mb-3">{title}</h2>
-        <p className="text-gray-300 mb-4">{message}</p>
-        <button
-          className="bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark transition-all duration-300"
-          onClick={onClose}
-        >
-          {buttonText ?? 'Close'}
-        </button>
+        <p className="text-gray-300">
+          {message} <span className="text-primary font-bold">{chord}</span>
+        </p>
+        {buttonText && (
+          <button
+            className="bg-primary text-white py-2 px-4 rounded-md hover:bg-secondary transition-all duration-300 mt-4"
+            onClick={onGoToPlayground}
+          >
+            {buttonText}
+          </button>
+        )}
       </div>
     </div>
   );
