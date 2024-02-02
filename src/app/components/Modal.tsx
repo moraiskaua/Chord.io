@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, use, useEffect, useState } from 'react';
+import { ReactNode, use, useContext, useEffect, useState } from 'react';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import { ImHappy2 } from 'react-icons/im';
 import { CldUploadButton } from 'next-cloudinary';
@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { FaUserCircle } from 'react-icons/fa';
+import { LanguageContext } from '../contexts/LanguageContext';
 
 interface BodyModalType {
   keyword: string;
@@ -26,6 +27,8 @@ interface ModalProps {
   onGoToPlayground?: () => void;
 }
 
+export type LanguageType = 'en' | 'pt';
+
 const Modal: React.FC<ModalProps> = ({
   variant,
   title,
@@ -38,6 +41,7 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const session = useSession();
   const [imageUrl, setImageUrl] = useState(localStorage.getItem('userPhoto'));
+  const { changeLanguage } = useContext(LanguageContext);
   const [selectedLanguage, setSelectedLanguage] = useState(
     localStorage.getItem('language'),
   );
@@ -51,11 +55,6 @@ const Modal: React.FC<ModalProps> = ({
     } catch (error) {
       console.error('Error uploading image:', error);
     }
-  };
-
-  const handleLanguageChange = e => {
-    setSelectedLanguage(e.target.value);
-    localStorage.setItem('language', e.target.value);
   };
 
   return (
@@ -128,11 +127,15 @@ const Modal: React.FC<ModalProps> = ({
             <h3>Select Language</h3>
             <select
               value={selectedLanguage}
-              onChange={handleLanguageChange}
+              onChange={e => {
+                setSelectedLanguage(e.target.value as LanguageType);
+                localStorage.setItem('language', e.target.value);
+                changeLanguage(selectedLanguage as LanguageType);
+              }}
               className="bg-tertiary shadow-custom text-white px-3 py-2 rounded-md"
             >
-              <option value="en-US">English</option>
-              <option value="pt-BR">Portuguese</option>
+              <option value="en">English</option>
+              <option value="pt">Portuguese</option>
             </select>
           </div>
         )}

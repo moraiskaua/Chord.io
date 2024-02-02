@@ -1,6 +1,9 @@
 {
-  "Home": {
+  "WelcomeModal": {
     "title": "Bem-vindo ao CHORD.IO!",
-    "welcomeMessage": "Seu objetivo aqui é acertar o acorde do dia."
+    "message": "Seu objetivo aqui é acertar o acorde do dia."
+  },
+  "Correctometer": {
+    "areClose": "ESTÁ PERTO?"
   }
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import AuthContext from '../../contexts/AuthContext';
-import '../../globals.css';
-import { NextIntlClientProvider } from 'next-intl';
+import AuthContext from './contexts/AuthContext';
+import './globals.css';
+import LanguageProvider from '@/app/contexts/LanguageContext';
 
 export const metadata: Metadata = {
   title: 'Chord.io',
@@ -18,14 +18,9 @@ export default function LocaleLayout({
   return (
     <html lang={locale}>
       <body className="bg-[#201d20]">
-        <NextIntlClientProvider
-          messages={{
-            pt: require('../../../../messages/pt.json'),
-            en: require('../../../../messages/en.json'),
-          }}
-        >
+        <LanguageProvider>
           <AuthContext>{children}</AuthContext>
-        </NextIntlClientProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

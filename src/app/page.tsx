@@ -9,7 +9,7 @@ import Header from '@/app/components/Header';
 import AudioPlayer from '@/app/components/AudioPlayer';
 
 const Home = () => {
-  const t = useTranslations('Home');
+  const t = useTranslations('WelcomeModal');
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -26,13 +26,12 @@ const Home = () => {
       {showModal && (
         <Modal
           variant="home"
-          title="Welcome to CHORD.IO!"
-          message={t('welcomeMessage')}
+          title={t('title')}
+          message={t('message')}
           onClose={() => setShowModal(false)}
         />
       )}
       <main className="min-h-screen w-full flex flex-col justify-center items-center">
-        <h1 className="text-3xl text-white">{t('title')}</h1>
         <Header />
         <AudioPlayer />
       </main>
