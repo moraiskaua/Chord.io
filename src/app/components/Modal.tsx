@@ -70,7 +70,7 @@ const Modal: React.FC<ModalProps> = ({
     >
       <div
         className={`bg-[#231C24] text-white p-8 rounded-md shadow-lg text-center relative ${
-          variant === 'help' && 'w-1/3'
+          variant === 'help' && 'w-2/3 lg:w-1/3 h-5/6 md:h-min text-xs'
         }`}
         onClick={e => e.stopPropagation()}
       >
@@ -81,7 +81,7 @@ const Modal: React.FC<ModalProps> = ({
             onClick={onClose}
           />
         </div>
-        <div className="flex items-center justify-center mb-3 text-2xl">
+        <div className="flex items-center justify-center mb-3 text-xl md:text-2xl">
           <h2 className="font-bold">{title}</h2>
           {variant === 'playground' && (
             <ImHappy2 className="ml-2.5 text-yellow-400 " />
