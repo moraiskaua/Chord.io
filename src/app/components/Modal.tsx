@@ -1,6 +1,13 @@
-import React, { ReactNode } from 'react';
+'use client';
+
+import { ReactNode, useEffect } from 'react';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import { ImHappy2 } from 'react-icons/im';
+import { CldUploadButton } from 'next-cloudinary';
+import axios from 'axios';
+import Image from 'next/image';
+import { getSession } from 'next-auth/react';
+import getCurrentUser from '../helpers/getCurrentUser';
 
 interface BodyModalType {
   keyword: string;
@@ -29,6 +36,15 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   onGoToPlayground,
 }) => {
+  const handleUpload = async result => {
+    try {
+      const imageUrl = result?.info?.secure_url;
+      await axios.post('/api/change-image', { imageUrl });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-gray-950/35 bg-opacity-75 z-50"
@@ -70,6 +86,17 @@ const Modal: React.FC<ModalProps> = ({
               <p className="font-light mb-3.5">{item.message}</p>
             </div>
           ))}
+        {variant === 'settings' && (
+          <div className="flex flex-col text-gray-300 gap-3">
+            <CldUploadButton
+              options={{ maxFiles: 1 }}
+              onUpload={handleUpload}
+              uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+            >
+              {/* <Image src={} /> */}
+            </CldUploadButton>
+          </div>
+        )}
         {buttonText && (
           <button
             className="bg-primary text-white py-2 px-4 rounded-md hover:bg-secondary transition-all duration-300 mt-4"

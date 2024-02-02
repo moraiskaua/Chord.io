@@ -34,6 +34,14 @@ const Header = () => {
           onClose={() => setHelpModal(false)}
         />
       )}
+      {settingsModal && (
+        <Modal
+          variant="settings"
+          title="Settings"
+          message="fdafdsa"
+          onClose={() => setSettingsModal(false)}
+        />
+      )}
       <header className="w-full uppercase text-primary font-bold text-7xl flex justify-around items-center h-40">
         <div className="flex gap-4 items-center">
           {session.status === 'authenticated' ? (
@@ -95,6 +103,7 @@ const Header = () => {
           <IoMdSettings
             size={35}
             className="cursor-pointer hover:scale-110 transition-all duration-300"
+            onClick={() => setSettingsModal(true)}
           />
         </div>
       </header>
