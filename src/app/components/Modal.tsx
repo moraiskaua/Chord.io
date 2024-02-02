@@ -97,12 +97,12 @@ const Modal: React.FC<ModalProps> = ({
           ))}
         {variant === 'settings' && (
           <div className="flex flex-col text-gray-300 gap-3">
-            <CldUploadButton
-              options={{ maxFiles: 1 }}
-              onUpload={handleUpload}
-              uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-            >
-              {session.status === 'authenticated' && (
+            {session.status === 'authenticated' && (
+              <CldUploadButton
+                options={{ maxFiles: 1 }}
+                onUpload={handleUpload}
+                uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+              >
                 <div className="flex flex-col justify-center items-center">
                   {imageUrl ? (
                     <Image
@@ -119,8 +119,8 @@ const Modal: React.FC<ModalProps> = ({
                     Click to change your profile picture
                   </p>
                 </div>
-              )}
-            </CldUploadButton>
+              </CldUploadButton>
+            )}
           </div>
         )}
         {buttonText && (
