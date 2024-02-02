@@ -77,6 +77,24 @@ const SignIn = () => {
     }
   };
 
+  const socialAction = (action: string) => {
+    setIsLoading(true);
+
+    signIn(action, {
+      redirect: false,
+    })
+      .then(callback => {
+        if (callback?.error) {
+          // toast.error('Something went wrong!');
+        }
+
+        if (callback?.ok && !callback?.error) {
+          // toast.success('Logged in!');
+        }
+      })
+      .finally(() => setIsLoading(false));
+  };
+
   return (
     <div className="rounded-2xl flex flex-col justify-center items-center p-3 h-screen">
       <div
@@ -125,7 +143,7 @@ const SignIn = () => {
         </Button>
         <button
           type="button"
-          onClick={() => {}}
+          onClick={() => socialAction('google')}
           className="inline-flex w-full justify-center rounded-md bg-secondary text-white shadow-sm ring-1 ring-inset ring-primary px-3 py-2"
         >
           <BsGoogle />

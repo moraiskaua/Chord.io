@@ -1,4 +1,4 @@
-import React, { ReactNode, createContext, useState } from 'react';
+import React, { ReactNode, createContext, useEffect, useState } from 'react';
 
 type InstrumentType = 'guitar-acoustic' | 'piano';
 
@@ -13,9 +13,13 @@ export const InstrumentContext = createContext<InstrumentContextProps>({
 });
 
 const InstrumentProvider = ({ children }: { children: ReactNode }) => {
-  const [instrument, setInstrument] = useState<InstrumentType>(
-    (localStorage.getItem('instrument') as InstrumentType) ?? 'piano',
-  );
+  const [instrument, setInstrument] = useState<InstrumentType>('piano');
+
+  useEffect(() => {
+    setInstrument(
+      (localStorage.getItem('instrument') as InstrumentType) ?? 'piano',
+    );
+  }, []);
 
   return (
     <InstrumentContext.Provider value={{ instrument, setInstrument }}>
