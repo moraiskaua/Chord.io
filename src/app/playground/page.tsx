@@ -1,6 +1,6 @@
 'use client';
 
-import InstrumentProvider from '@/contexts/InstrumentContext';
+import InstrumentProvider from '@/app/contexts/InstrumentContext';
 import Header from '../components/Header';
 import AudioPlayer from '../components/AudioPlayer';
 import { useEffect, useState } from 'react';

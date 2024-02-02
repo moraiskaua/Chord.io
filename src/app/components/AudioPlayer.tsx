@@ -1,10 +1,10 @@
 'use client';
 
 import { useContext, useEffect, useState } from 'react';
-import useTone, { getChordNotes, getRandomChord } from '@/hooks/useTone';
+import useTone, { getChordNotes, getRandomChord } from '@/app/hooks/useTone';
 import * as Tone from 'tone';
-import { notesUrl } from '@/data/notes';
-import { InstrumentContext } from '@/contexts/InstrumentContext';
+import { notesUrl } from '@/app/data/notes';
+import { InstrumentContext } from '@/app/contexts/InstrumentContext';
 import Correctometer from './Correctometer';
 import { FaPlay } from 'react-icons/fa';
 import { GiMusicalNotes } from 'react-icons/gi';
@@ -12,13 +12,13 @@ import { FaArrowTurnDown } from 'react-icons/fa6';
 import {
   calculateCircularNoteDistance,
   calculateOverallAccuracy,
-} from '@/utils/calculateAccurancy';
+} from '@/app/utils/calculateAccurancy';
 import MusicButton from './MusicButton';
 import Modal from './Modal';
 import { usePathname, useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { notesPossibilities } from '@/utils/notesPossibilities';
+import { notesPossibilities } from '@/app/utils/notesPossibilities';
 
 interface ChordType {
   name: string;
@@ -59,9 +59,6 @@ const AudioPlayer = () => {
         if (lastRequestDate === today && localStorage.getItem('dailyChord')) {
           setAttempts(JSON.parse(localStorage.getItem('attempts')));
           setDailyChord(JSON.parse(localStorage.getItem('dailyChord')));
-          setIsCorrectModal(localStorage.getItem('chordIsCorrect') === 'true');
-          setIsCorrect(localStorage.getItem('chordIsCorrect') === 'true');
-
           return;
         }
 
@@ -78,6 +75,16 @@ const AudioPlayer = () => {
 
     getChordData();
   }, [path]);
+
+  useEffect(() => {
+    const checkUserChord = async () => {
+      const { data } = await axios.get('/api/check-user-chord/');
+      setIsCorrectModal(data);
+      setIsCorrect(data);
+    };
+
+    checkUserChord();
+  }, []);
 
   useEffect(() => {
     if (userGuess === dailyChord?.name && userGuess !== '') {
@@ -182,7 +189,6 @@ const AudioPlayer = () => {
         const deduction = 20 * attempts;
         const calculatedPoints = Math.max(100 - deduction, 0);
         const userEmail = session.data?.user.email;
-        localStorage.setItem('chordIsCorrect', 'true');
         setIsCorrect(true);
         setHitModal(true);
 

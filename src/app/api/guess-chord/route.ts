@@ -1,5 +1,5 @@
 import getNewChord from '@/app/helpers/getNewChord';
-import { prisma } from '@/database/prismadb';
+import { prisma } from '@/app/database/prismadb';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface IGuessChordBody {

@@ -4,7 +4,7 @@ import { MdLeaderboard } from 'react-icons/md';
 import { CgPiano } from 'react-icons/cg';
 import { FaGuitar } from 'react-icons/fa';
 import { useContext, useState } from 'react';
-import { InstrumentContext } from '@/contexts/InstrumentContext';
+import { InstrumentContext } from '@/app/contexts/InstrumentContext';
 import { HiCalendarDays } from 'react-icons/hi2';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -14,7 +14,7 @@ import { RxExit } from 'react-icons/rx';
 import { IoMdSettings, IoMdHelpCircle } from 'react-icons/io';
 import { GiPerspectiveDiceSixFacesRandom as LuckyCube } from 'react-icons/gi';
 import Modal from './Modal';
-import { helpData } from '@/data/helpData';
+import { helpData } from '@/app/data/helpData';
 
 const Header = () => {
   const [settingsModal, setSettingsModal] = useState(false);

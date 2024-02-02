@@ -3,7 +3,7 @@
 import {
   notesPossibilities,
   toneNotesPossibilities,
-} from '@/utils/notesPossibilities';
+} from '@/app/utils/notesPossibilities';
 import { useEffect, useState } from 'react';
 import * as Tone from 'tone';
 

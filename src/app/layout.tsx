@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import AuthContext from '@/contexts/AuthContext';
+import AuthContext from '@/app/contexts/AuthContext';
 import './globals.css';
 
 export const metadata: Metadata = {

@@ -1,4 +1,4 @@
-import { prisma } from '@/database/prismadb';
+import { prisma } from '@/app/database/prismadb';
 
 const possibleNotes = [
   'C4',

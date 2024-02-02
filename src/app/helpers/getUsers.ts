@@ -1,4 +1,4 @@
-import { prisma } from '@/database/prismadb';
+import { prisma } from '@/app/database/prismadb';
 
 const getUsers = async () => {
   try {

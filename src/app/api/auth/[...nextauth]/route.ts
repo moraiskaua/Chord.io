@@ -1,4 +1,4 @@
-import { prisma } from '@/database/prismadb';
+import { prisma } from '@/app/database/prismadb';
 import bcrypt from 'bcrypt';
 import { AuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
