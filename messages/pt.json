@@ -3,7 +3,11 @@
     "title": "Bem-vindo ao CHORD.IO!",
     "message": "Seu objetivo aqui é acertar o acorde do dia."
   },
+  "playgroundModal": {
+    "title": "Bem-vindo ao modo playground!",
+    "message": "Aqui você pode adivinhar quantos acordes quiser."
+  },
   "Correctometer": {
-    "areClose": "ESTÁ PERTO?"
+    "areClose": "VOCÊ ESTÁ PERTO?"
   }
 }

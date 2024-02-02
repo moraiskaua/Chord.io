@@ -3,6 +3,10 @@
     "title": "Welcome to CHORD.IO!",
     "message": "your goal here is to strike the chord of the day."
   },
+  "playgroundModal": {
+    "title": "Welcome to the playground!",
+    "message": "Here you can guess as many chords as you want."
+  },
   "Correctometer": {
     "areClose": "ARE YOU CLOSE?"
   }

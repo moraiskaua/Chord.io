@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { FaUserCircle } from 'react-icons/fa';
 import { LanguageContext } from '../contexts/LanguageContext';
+import en from '../../../messages/en.json';
 
 interface BodyModalType {
   keyword: string;
@@ -21,7 +22,7 @@ interface ModalProps {
   message?: string;
   chord?: string;
   buttonText?: string;
-  variant: 'home' | 'playground' | 'help' | 'settings';
+  variant?: 'default' | 'playground' | 'help' | 'settings';
   bodyModal?: BodyModalType[];
   onClose: () => void;
   onGoToPlayground?: () => void;
@@ -30,7 +31,7 @@ interface ModalProps {
 export type LanguageType = 'en' | 'pt';
 
 const Modal: React.FC<ModalProps> = ({
-  variant,
+  variant = 'default',
   title,
   message,
   bodyModal,
@@ -43,7 +44,7 @@ const Modal: React.FC<ModalProps> = ({
   const [imageUrl, setImageUrl] = useState(localStorage.getItem('userPhoto'));
   const { changeLanguage } = useContext(LanguageContext);
   const [selectedLanguage, setSelectedLanguage] = useState(
-    JSON.parse(localStorage.getItem('language')).name ?? 'en',
+    JSON.parse(localStorage.getItem('language'))?.name ?? 'en',
   );
 
   const handleUpload = async result => {
@@ -81,7 +82,7 @@ const Modal: React.FC<ModalProps> = ({
             <ImHappy2 className="ml-2.5 text-yellow-400 " />
           )}
         </div>
-        {variant === 'home' && (
+        {variant !== 'settings' && (
           <p className="text-gray-300">
             {message} <span className="text-primary font-bold">{chord}</span>
           </p>

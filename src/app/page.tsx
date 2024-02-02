@@ -25,7 +25,6 @@ const Home = () => {
     <InstrumentProvider>
       {showModal && (
         <Modal
-          variant="home"
           title={t('title')}
           message={t('message')}
           onClose={() => setShowModal(false)}

@@ -5,8 +5,10 @@ import Header from '../components/Header';
 import AudioPlayer from '../components/AudioPlayer';
 import { useEffect, useState } from 'react';
 import Modal from '../components/Modal';
+import { useTranslations } from 'next-intl';
 
 const Playground = () => {
+  const t = useTranslations('playgroundModal');
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -23,8 +25,8 @@ const Playground = () => {
       {showModal && (
         <Modal
           variant="playground"
-          title="Welcome to the playground!"
-          message="Here you can guess as many chords as you want."
+          title={t('title')}
+          message={t('message')}
           onClose={() => setShowModal(false)}
         />
       )}
