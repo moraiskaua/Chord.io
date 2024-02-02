@@ -14,7 +14,7 @@ import { RxExit } from 'react-icons/rx';
 import { IoMdSettings, IoMdHelpCircle } from 'react-icons/io';
 import { GiPerspectiveDiceSixFacesRandom as LuckyCube } from 'react-icons/gi';
 import Modal from './Modal';
-import { helpData } from '@/app/data/helpData';
+import { useTranslations } from 'next-intl';
 
 const Header = () => {
   const [settingsModal, setSettingsModal] = useState(false);
@@ -23,6 +23,7 @@ const Header = () => {
   const { instrument, setInstrument } = useContext(InstrumentContext);
   const pathname = usePathname();
   const session = useSession();
+  const t = useTranslations('settingsModal');
 
   return (
     <>
@@ -30,15 +31,13 @@ const Header = () => {
         <Modal
           variant="help"
           title="Tutorial"
-          bodyModal={helpData}
           onClose={() => setHelpModal(false)}
         />
       )}
       {settingsModal && (
         <Modal
           variant="settings"
-          title="Settings"
-          message="fdafdsa"
+          title={t('title')}
           onClose={() => setSettingsModal(false)}
         />
       )}

@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { FaUserCircle } from 'react-icons/fa';
 import { LanguageContext } from '../contexts/LanguageContext';
 import { HelpModal } from '../data/helpData';
+import { useTranslations } from 'next-intl';
 
 interface BodyModalType {
   keyword: string;
@@ -34,12 +35,12 @@ const Modal: React.FC<ModalProps> = ({
   variant = 'default',
   title,
   message,
-  bodyModal,
   chord,
   buttonText,
   onClose,
   onGoToPlayground,
 }) => {
+  const t = useTranslations('settingsModal');
   const session = useSession();
   const [imageUrl, setImageUrl] = useState(localStorage.getItem('userPhoto'));
   const { changeLanguage } = useContext(LanguageContext);
@@ -108,13 +109,11 @@ const Modal: React.FC<ModalProps> = ({
                   ) : (
                     <FaUserCircle size={85} className="text-white/45" />
                   )}
-                  <p className="text-xs mt-2">
-                    Click to change your profile picture
-                  </p>
+                  <p className="text-xs mt-2">{t('changeImage')}</p>
                 </div>
               </CldUploadButton>
             )}
-            <h3>Select Language</h3>
+            <h3>{t('selectLanguage')}</h3>
             <select
               value={selectedLanguage}
               onChange={e => {
@@ -123,8 +122,8 @@ const Modal: React.FC<ModalProps> = ({
               }}
               className="bg-tertiary shadow-custom text-white px-3 py-2 rounded-md"
             >
-              <option value="en">English</option>
-              <option value="pt">Portuguese</option>
+              <option value="en">{t('languages.en')}</option>
+              <option value="pt">{t('languages.pt')}</option>
             </select>
           </div>
         )}

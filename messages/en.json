@@ -21,6 +21,15 @@
       "message": "The Correctometer is your ally in mastering chord identification. It provides real-time feedback on the accuracy of your guesses, helping you track your progress and identify areas for improvement. Utilize this tool to enhance your musical proficiency and confidence."
     }
   },
+  "settingsModal": {
+    "title": "Settings",
+    "changeImage": "Click to change your profile picture",
+    "selectLanguage": "Select Language",
+    "languages": {
+      "en": "English",
+      "pt": "Portuguese"
+    }
+  },
   "Correctometer": {
     "areClose": "ARE YOU CLOSE?"
   }

@@ -21,6 +21,15 @@
       "message": "O Acertômetro é seu aliado no domínio da identificação de acordes. Ele fornece feedback em tempo real sobre a precisão de suas suposições, ajudando você a acompanhar seu progresso e identificar áreas de melhoria. Utilize esta ferramenta para aumentar sua proficiência musical e confiança."
     }
   },
+  "settingsModal": {
+    "title": "Configurações",
+    "changeImage": "Clique para mudar sua foto de perfil",
+    "selectLanguage": "Selecione o idioma",
+    "languages": {
+      "en": "Inglês",
+      "pt": "Português"
+    }
+  },
   "Correctometer": {
     "areClose": "VOCÊ ESTÁ PERTO?"
   }
