@@ -10,6 +10,7 @@ import Button from '../components/Button';
 import { BsGoogle } from 'react-icons/bs';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa6';
+import { useTranslations } from 'next-intl';
 
 type VariantType = 'LOGIN' | 'REGISTER';
 
@@ -18,6 +19,7 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const session = useSession();
   const router = useRouter();
+  const t = useTranslations('signIn');
 
   useEffect(() => {
     if (session?.status === 'authenticated') {
@@ -96,7 +98,7 @@ const SignIn = () => {
         {variant === 'REGISTER' && (
           <Input
             id="name"
-            label="Name"
+            label={t('name')}
             register={register}
             errors={errors}
             disabled={isLoading}
@@ -104,7 +106,7 @@ const SignIn = () => {
         )}
         <Input
           id="email"
-          label="Email"
+          label={t('email')}
           type="email"
           register={register}
           errors={errors}
@@ -112,14 +114,14 @@ const SignIn = () => {
         />
         <Input
           id="password"
-          label="Password"
+          label={t('password')}
           type="password"
           register={register}
           errors={errors}
           disabled={isLoading}
         />
         <Button disabled={isLoading} fullWidth>
-          {variant === 'LOGIN' ? 'Sign In' : 'Register'}
+          {variant === 'LOGIN' ? t('signIn') : t('register')}
         </Button>
         <button
           type="button"
@@ -130,13 +132,9 @@ const SignIn = () => {
         </button>
       </form>
       <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
-        <div>
-          {variant === 'LOGIN'
-            ? 'New to Chord.io?'
-            : 'Already have an account?'}
-        </div>
+        <div>{variant === 'LOGIN' ? t('noAccount') : t('hasAccount')}</div>
         <div onClick={toggleVariant} className="underline cursor-pointer">
-          {variant === 'LOGIN' ? 'Create an account' : 'Login'}
+          {variant === 'LOGIN' ? t('createAccount') : t('signIn')}
         </div>
       </div>
     </div>

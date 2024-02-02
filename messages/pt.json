@@ -39,6 +39,19 @@
       "pt": "Português"
     }
   },
+  "button": {
+    "enter": "Enviar"
+  },
+  "signIn": {
+    "name": "Nome",
+    "email": "Email",
+    "password": "Senha",
+    "noAccount": "Novo no Chord.io?",
+    "hasAccount": "Já tem uma conta?",
+    "createAccount": "Criar conta",
+    "signIn": "Entrar",
+    "register": "Cadastre-se"
+  },
   "Correctometer": {
     "areClose": "VOCÊ ESTÁ PERTO?"
   }
