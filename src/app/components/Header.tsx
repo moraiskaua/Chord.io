@@ -3,7 +3,7 @@
 import { MdLeaderboard } from 'react-icons/md';
 import { CgPiano } from 'react-icons/cg';
 import { FaGuitar } from 'react-icons/fa';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { InstrumentContext } from '@/app/contexts/InstrumentContext';
 import { HiCalendarDays } from 'react-icons/hi2';
 import Link from 'next/link';
@@ -24,6 +24,10 @@ const Header = () => {
   const pathname = usePathname();
   const session = useSession();
   const t = useTranslations('settingsModal');
+
+  useEffect(() => {
+    console.log(session.data);
+  }, [session]);
 
   return (
     <>

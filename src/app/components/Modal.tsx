@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import { ImHappy2 } from 'react-icons/im';
 import { CldUploadButton } from 'next-cloudinary';
@@ -42,11 +42,15 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const t = useTranslations('settingsModal');
   const session = useSession();
-  const [imageUrl, setImageUrl] = useState(localStorage.getItem('userPhoto'));
+  const [imageUrl, setImageUrl] = useState('');
   const { changeLanguage } = useContext(LanguageContext);
   const [selectedLanguage, setSelectedLanguage] = useState(
     JSON.parse(localStorage.getItem('language'))?.name ?? 'en',
   );
+
+  useEffect(() => {
+    setImageUrl(session.data.user?.image ?? localStorage.getItem('userPhoto'));
+  }, [session.data]);
 
   const handleUpload = async result => {
     try {
