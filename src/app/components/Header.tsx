@@ -107,7 +107,7 @@ const Header = () => {
           </Link>
           <IoMdSettings
             size={35}
-            className="cursor-pointer hover:scale-110 transition-all duration-300"
+            className="cursor-pointer hover:scale-110 hover:rotate-90 transition-all duration-500"
             onClick={() => setSettingsModal(true)}
           />
         </div>
