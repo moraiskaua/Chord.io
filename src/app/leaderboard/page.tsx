@@ -52,11 +52,11 @@ const Leaderboard = () => {
               <td className="flex justify-center items-center gap-3">
                 {user.image ? (
                   <Image
-                    src={user.image}
+                    src={user.image ?? localStorage.getItem('userImage')}
                     height={35}
                     width={35}
                     alt="Profile photo"
-                    className="rounded-full"
+                    className="rounded-full aspect-square"
                   />
                 ) : (
                   <FaUserCircle size={35} className="text-white/45" />

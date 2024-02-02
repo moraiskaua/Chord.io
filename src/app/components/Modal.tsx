@@ -108,7 +108,7 @@ const Modal: React.FC<ModalProps> = ({
                     <Image
                       src={imageUrl}
                       alt="Profile image"
-                      className="rounded-full"
+                      className="rounded-full aspect-square"
                       width={85}
                       height={85}
                     />
