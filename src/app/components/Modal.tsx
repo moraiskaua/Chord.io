@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, use, useContext, useEffect, useState } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import { ImHappy2 } from 'react-icons/im';
 import { CldUploadButton } from 'next-cloudinary';
@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { FaUserCircle } from 'react-icons/fa';
 import { LanguageContext } from '../contexts/LanguageContext';
-import en from '../../../messages/en.json';
+import { HelpModal } from '../data/helpData';
 
 interface BodyModalType {
   keyword: string;
@@ -87,18 +87,7 @@ const Modal: React.FC<ModalProps> = ({
             {message} <span className="text-primary font-bold">{chord}</span>
           </p>
         )}
-        {variant === 'help' &&
-          bodyModal.map((item, index) => (
-            <div key={index} className="flex flex-col text-gray-300 gap-3">
-              <div className="flex justify-center items-center font-bold text-white gap-2.5">
-                <div className="bg-primary rounded-full p-1.5 text-3xl">
-                  {item.icon}
-                </div>
-                <h3 className="text-primary text-4xl">{item.keyword}</h3>
-              </div>
-              <p className="font-light mb-3.5">{item.message}</p>
-            </div>
-          ))}
+        {variant === 'help' && <HelpModal />}
         {variant === 'settings' && (
           <div className="flex flex-col text-gray-300 gap-3">
             {session.status === 'authenticated' && (

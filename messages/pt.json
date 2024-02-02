@@ -7,6 +7,20 @@
     "title": "Bem-vindo ao modo playground!",
     "message": "Aqui você pode adivinhar quantos acordes quiser."
   },
+  "helpModal": {
+    "normalMode": {
+      "title": "Modo Normal",
+      "message": "No Modo Normal, um novo desafio de acordes espera por você todos os dias. Seu objetivo é identificar corretamente o acorde gerado aleatoriamente. Este modo oferece uma abordagem estruturada de aprendizagem, proporcionando oportunidades diárias para testar e refinar seu ouvido musical."
+    },
+    "playgroundMode": {
+      "title": " Modo Playground",
+      "message": "Explore acordes livremente no modo Playground. Aqui, você tem a liberdade de experimentar diferentes combinações de acordes e sons no seu próprio ritmo. Este modo é ideal para aprimorar suas habilidades, permitindo a exploração prática e uma compreensão mais profunda dos conceitos da teoria musical."
+    },
+    "correctometer": {
+      "title": "Acertômetro",
+      "message": "O Acertômetro é seu aliado no domínio da identificação de acordes. Ele fornece feedback em tempo real sobre a precisão de suas suposições, ajudando você a acompanhar seu progresso e identificar áreas de melhoria. Utilize esta ferramenta para aumentar sua proficiência musical e confiança."
+    }
+  },
   "Correctometer": {
     "areClose": "VOCÊ ESTÁ PERTO?"
   }
