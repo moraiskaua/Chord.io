@@ -76,13 +76,19 @@ const Header = () => {
             <CgPiano
               size={35}
               className="cursor-pointer hover:scale-110 transition-all duration-300"
-              onClick={() => setInstrument(prev => 'guitar-acoustic')}
+              onClick={() => {
+                setInstrument('guitar-acoustic');
+                localStorage.setItem('instrument', 'guitar-acoustic');
+              }}
             />
           ) : (
             <FaGuitar
               size={35}
               className="cursor-pointer hover:scale-110 transition-all duration-300"
-              onClick={() => setInstrument(prev => 'piano')}
+              onClick={() => {
+                setInstrument('piano');
+                localStorage.setItem('instrument', 'piano');
+              }}
             />
           )}
         </div>

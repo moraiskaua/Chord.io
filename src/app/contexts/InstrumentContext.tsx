@@ -13,7 +13,9 @@ export const InstrumentContext = createContext<InstrumentContextProps>({
 });
 
 const InstrumentProvider = ({ children }: { children: ReactNode }) => {
-  const [instrument, setInstrument] = useState<InstrumentType>('piano');
+  const [instrument, setInstrument] = useState<InstrumentType>(
+    (localStorage.getItem('instrument') as InstrumentType) ?? 'piano',
+  );
 
   return (
     <InstrumentContext.Provider value={{ instrument, setInstrument }}>
