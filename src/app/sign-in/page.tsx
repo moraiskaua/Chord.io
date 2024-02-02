@@ -11,6 +11,7 @@ import { BsGoogle } from 'react-icons/bs';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useTranslations } from 'next-intl';
+import toast from 'react-hot-toast';
 
 type VariantType = 'LOGIN' | 'REGISTER';
 
@@ -54,7 +55,7 @@ const SignIn = () => {
       await axios
         .post('/api/register', data)
         .then(() => signIn('credentials', data))
-        // .catch(() => toast.error('Something went wrong!'))
+        .catch(() => toast.error(t('somenthingWrong')))
         .finally(() => setIsLoading(false));
     }
 
@@ -65,11 +66,11 @@ const SignIn = () => {
       })
         .then(callback => {
           if (callback?.error) {
-            // toast.error('Invalid credentials!');
+            toast.error(t('somenthingWrong'));
           }
 
           if (callback?.ok && !callback?.error) {
-            // toast.success('Logged in!');
+            toast.success(t('loggedIn'));
             router.push('/');
           }
         })
@@ -77,23 +78,23 @@ const SignIn = () => {
     }
   };
 
-  const socialAction = (action: string) => {
-    setIsLoading(true);
+  // const socialAction = (action: string) => {
+  //   setIsLoading(true);
 
-    signIn(action, {
-      redirect: false,
-    })
-      .then(callback => {
-        if (callback?.error) {
-          // toast.error('Something went wrong!');
-        }
+  //   signIn(action, {
+  //     redirect: false,
+  //   })
+  //     .then(callback => {
+  //       if (callback?.error) {
+  //         toast.error('Something went wrong!');
+  //       }
 
-        if (callback?.ok && !callback?.error) {
-          // toast.success('Logged in!');
-        }
-      })
-      .finally(() => setIsLoading(false));
-  };
+  //       if (callback?.ok && !callback?.error) {
+  //         toast.success('Logged in!');
+  //       }
+  //     })
+  //     .finally(() => setIsLoading(false));
+  // };
 
   return (
     <div className="rounded-2xl flex flex-col justify-center items-center p-3 h-screen">
@@ -141,13 +142,13 @@ const SignIn = () => {
         <Button disabled={isLoading} fullWidth>
           {variant === 'LOGIN' ? t('signIn') : t('register')}
         </Button>
-        <button
+        {/* <button
           type="button"
           onClick={() => socialAction('google')}
           className="inline-flex w-full justify-center rounded-md bg-secondary text-white shadow-sm ring-1 ring-inset ring-primary px-3 py-2"
         >
           <BsGoogle />
-        </button>
+        </button> */}
       </form>
       <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
         <div>{variant === 'LOGIN' ? t('noAccount') : t('hasAccount')}</div>

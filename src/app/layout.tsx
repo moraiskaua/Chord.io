@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import AuthContext from './contexts/AuthContext';
 import './globals.css';
 import LanguageProvider from '@/app/contexts/LanguageContext';
+import ToasterContext from './contexts/ToasterContext';
 
 export const metadata: Metadata = {
   title: 'Chord.io',
@@ -19,6 +20,7 @@ export default function LocaleLayout({
     <html lang={locale}>
       <body className="bg-[#201d20]">
         <LanguageProvider>
+          <ToasterContext />
           <AuthContext>{children}</AuthContext>
         </LanguageProvider>
       </body>

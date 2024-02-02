@@ -50,7 +50,9 @@
     "hasAccount": "Já tem uma conta?",
     "createAccount": "Criar conta",
     "signIn": "Entrar",
-    "register": "Cadastre-se"
+    "register": "Cadastre-se",
+    "loggedIn": "Bem-vindo!",
+    "somenthingWrong": "Algo deu errado. Tente novamente."
   },
   "leaderboard": {
     "rank": "Posição",
