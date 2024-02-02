@@ -62,13 +62,15 @@ const AudioPlayer = () => {
   }, [path]);
 
   useEffect(() => {
-    const checkUserChord = async () => {
-      const { data } = await axios.get('/api/check-user-chord/');
-      setIsCorrectModal(data);
-      setIsCorrect(data);
-    };
+    if (path === '/') {
+      const checkUserChord = async () => {
+        const { data } = await axios.get('/api/check-user-chord/');
+        setIsCorrectModal(data);
+        setIsCorrect(data);
+      };
 
-    checkUserChord();
+      checkUserChord();
+    }
   }, []);
 
   useEffect(() => {
