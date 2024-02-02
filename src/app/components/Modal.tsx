@@ -1,13 +1,12 @@
 'use client';
 
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, use, useEffect } from 'react';
 import { IoCloseCircleSharp } from 'react-icons/io5';
 import { ImHappy2 } from 'react-icons/im';
 import { CldUploadButton } from 'next-cloudinary';
 import axios from 'axios';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { getSession } from 'next-auth/react';
-import getCurrentUser from '../helpers/getCurrentUser';
 
 interface BodyModalType {
   keyword: string;
@@ -36,6 +35,8 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   onGoToPlayground,
 }) => {
+  const session = useSession();
+
   const handleUpload = async result => {
     try {
       const imageUrl = result?.info?.secure_url;
@@ -93,7 +94,20 @@ const Modal: React.FC<ModalProps> = ({
               onUpload={handleUpload}
               uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
             >
-              {/* <Image src={} /> */}
+              {session.status === 'authenticated' && (
+                <div className="flex flex-col justify-center items-center">
+                  <Image
+                    src={session.data.user.image ?? ''}
+                    alt="Profile image"
+                    className="rounded-full"
+                    width={85}
+                    height={85}
+                  />
+                  <p className="text-xs mt-2">
+                    Click to change your profile picture
+                  </p>
+                </div>
+              )}
             </CldUploadButton>
           </div>
         )}
