@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { User } from '@prisma/client';
 import axios from 'axios';
+import Loading from '../components/Loading';
 
 const Leaderboard = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -22,6 +23,7 @@ const Leaderboard = () => {
 
   return (
     <>
+      {users.length === 0 && <Loading />}
       <header className="w-full uppercase text-primary font-bold text-7xl flex justify-around items-center h-40">
         <div
           className="absolute top-3 left-3 ring-2 ring-primary p-2 rounded-full text-primary cursor-pointer"
