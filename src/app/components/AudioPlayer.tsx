@@ -141,14 +141,14 @@ const AudioPlayer = () => {
   };
 
   const playChord = ({ notes }: ChordType): void => {
-    if (isLoading && sampler) {
+    if (!isLoading && sampler) {
       Tone.start();
       sampler.triggerAttackRelease(notes, 1);
     }
   };
 
   const playChordArpeggiated = ({ notes }: ChordType): void => {
-    if (isLoading && sampler) {
+    if (!isLoading && sampler) {
       Tone.start();
       notes.forEach((note, index) => {
         setTimeout(() => {
