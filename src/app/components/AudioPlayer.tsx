@@ -52,24 +52,9 @@ const AudioPlayer = () => {
     }
 
     const getChordData = async () => {
-      const lastRequestDate = localStorage.getItem('lastChordRequestDate');
-      const today = new Date().toISOString().split('T')[0];
-
       if (path === '/') {
-        if (lastRequestDate === today && localStorage.getItem('dailyChord')) {
-          setAttempts(JSON.parse(localStorage.getItem('attempts')));
-          setDailyChord(JSON.parse(localStorage.getItem('dailyChord')));
-          return;
-        }
-
         const { data } = await axios.get('/api/daily-chord');
         setDailyChord(data);
-
-        // Atualizar a data da última requisição no localStorage
-        localStorage.setItem('lastChordRequestDate', today);
-
-        // Salvar o acorde no localStorage
-        localStorage.setItem('dailyChord', JSON.stringify(data));
       }
     };
 
@@ -188,12 +173,10 @@ const AudioPlayer = () => {
       if (userInput === dailyChord.name) {
         const deduction = 20 * attempts;
         const calculatedPoints = Math.max(100 - deduction, 0);
-        const userEmail = session.data?.user.email;
         setIsCorrect(true);
         setHitModal(true);
 
         await axios.post('/api/guess-chord', {
-          userEmail,
           userInput,
           calculatedPoints,
         });

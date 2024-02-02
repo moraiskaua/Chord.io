@@ -1,9 +1,9 @@
 import getNewChord from '@/app/helpers/getNewChord';
 import { prisma } from '@/app/database/prismadb';
 import { NextRequest, NextResponse } from 'next/server';
+import getCurrentUser from '@/app/helpers/getCurrentUser';
 
 interface IGuessChordBody {
-  userEmail: string;
   userInput: string;
   calculatedPoints: number;
 }
@@ -11,16 +11,18 @@ interface IGuessChordBody {
 export const POST = async (req: NextRequest) => {
   try {
     const body: IGuessChordBody = await req.json();
-    const { userEmail, userInput, calculatedPoints } = body;
+    const { userInput, calculatedPoints } = body;
+    const session = await getCurrentUser();
     const dailyChord = await getNewChord();
+
     const user = await prisma.user.findUnique({
       where: {
-        email: userEmail,
+        email: session.email,
       },
     });
 
     if (!user) {
-      return new NextResponse('User not found', { status: 404 });
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
     const existingUserChord = await prisma.userChord.findFirst({
@@ -47,7 +49,7 @@ export const POST = async (req: NextRequest) => {
         }),
         prisma.user.update({
           where: {
-            email: userEmail,
+            email: session.email,
           },
           data: {
             points: {
