@@ -37,11 +37,10 @@ const Modal: React.FC<ModalProps> = ({
   onGoToPlayground,
 }) => {
   const session = useSession();
-  const [imageUrl, setImageUrl] = useState('');
-
-  useEffect(() => {
-    setImageUrl(localStorage.getItem('userPhoto'));
-  }, []);
+  const [imageUrl, setImageUrl] = useState(localStorage.getItem('userPhoto'));
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    localStorage.getItem('language'),
+  );
 
   const handleUpload = async result => {
     try {
@@ -52,6 +51,11 @@ const Modal: React.FC<ModalProps> = ({
     } catch (error) {
       console.error('Error uploading image:', error);
     }
+  };
+
+  const handleLanguageChange = e => {
+    setSelectedLanguage(e.target.value);
+    localStorage.setItem('language', e.target.value);
   };
 
   return (
@@ -121,6 +125,15 @@ const Modal: React.FC<ModalProps> = ({
                 </div>
               </CldUploadButton>
             )}
+            <h3>Select Language</h3>
+            <select
+              value={selectedLanguage}
+              onChange={handleLanguageChange}
+              className="bg-tertiary shadow-custom text-white px-3 py-2 rounded-md"
+            >
+              <option value="en-US">English</option>
+              <option value="pt-BR">Portuguese</option>
+            </select>
           </div>
         )}
         {buttonText && (
