@@ -19,6 +19,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { notesPossibilities } from '@/app/utils/notesPossibilities';
+import Loading from './Loading';
 
 interface ChordType {
   name: string;
@@ -26,7 +27,7 @@ interface ChordType {
 }
 
 const AudioPlayer = () => {
-  const [loaded, setLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [sampler, setSampler] = useState<Tone.Sampler | null>(null);
   const [userGuess, setUserGuess] = useState<string>('');
   const [userInput, setUserInput] = useState<string>('');
@@ -90,7 +91,7 @@ const AudioPlayer = () => {
         urls: noteUrls,
         baseUrl: `/assets/${instrument}/`,
         onload: () => {
-          setLoaded(true);
+          setIsLoading(false);
         },
       }).toDestination();
 
@@ -140,14 +141,14 @@ const AudioPlayer = () => {
   };
 
   const playChord = ({ notes }: ChordType): void => {
-    if (loaded && sampler) {
+    if (isLoading && sampler) {
       Tone.start();
       sampler.triggerAttackRelease(notes, 1);
     }
   };
 
   const playChordArpeggiated = ({ notes }: ChordType): void => {
-    if (loaded && sampler) {
+    if (isLoading && sampler) {
       Tone.start();
       notes.forEach((note, index) => {
         setTimeout(() => {
@@ -195,77 +196,82 @@ const AudioPlayer = () => {
   };
 
   return (
-    <div className="bg-[#231C24] w-[95%] rounded-2xl flex-1 flex p-3">
-      {path === '/' && isCorrectModal && (
-        <Modal
-          variant="home"
-          title="Congratulations!"
-          message="You've already hit the chord of the day!"
-          buttonText="Go to Playground"
-          onClose={() => setIsCorrectModal(false)}
-          onGoToPlayground={() => {
-            setIsCorrectModal(false);
-            router.push('/playground');
-          }}
-        />
-      )}
-      {hitModal && (
-        <Modal
-          variant="home"
-          title="Congratulations!"
-          message={`Great job! You've correctly identified the chord`}
-          chord={dailyChord.name}
-          buttonText={path === '/playground' && 'Play again'}
-          onClose={
-            path === '/playground'
-              ? handleRestartGame
-              : () => setHitModal(false)
-          }
-        />
-      )}
-      <form
-        onSubmit={handleSubmit}
-        className="w-full flex flex-col gap-3 items-center justify-center"
-      >
-        <input
-          type="text"
-          value={userInput}
-          onChange={e => setUserInput(capitalizeFirstLetter(e.target.value))}
-          placeholder="Ex: F#m"
-          className={`bg-transparent border-b-8 border-primary text-white text-center font-bold text-8xl py-4 outline-none w-[500px] disabled:opacity-50 disabled:pointer-events-none`}
-          disabled={!loaded || !isToneInitialized || attempts > 4 || isCorrect}
-        />
-        <div className="mt-5 w-full flex justify-center gap-3">
-          <MusicButton
-            icon={FaPlay}
-            size={60}
-            disabled={
-              !loaded || !isToneInitialized || attempts > 4 || isCorrect
-            }
-            onClick={() => playChord(dailyChord)}
+    <>
+      {isLoading && <Loading />}
+      <div className="bg-[#231C24] w-[95%] rounded-2xl flex-1 flex p-3">
+        {path === '/' && isCorrectModal && (
+          <Modal
+            variant="home"
+            title="Congratulations!"
+            message="You've already hit the chord of the day!"
+            buttonText="Go to Playground"
+            onClose={() => setIsCorrectModal(false)}
+            onGoToPlayground={() => {
+              setIsCorrectModal(false);
+              router.push('/playground');
+            }}
           />
-          <MusicButton
-            icon={GiMusicalNotes}
-            size={60}
-            disabled={
-              !loaded || !isToneInitialized || attempts > 4 || isCorrect
-            }
-            onClick={() => playChordArpeggiated(dailyChord)}
-          />
-          <MusicButton
-            icon={FaArrowTurnDown}
-            variant="secondary"
-            text="Enter"
-            disabled={
-              !loaded || !isToneInitialized || attempts > 4 || isCorrect
+        )}
+        {hitModal && (
+          <Modal
+            variant="home"
+            title="Congratulations!"
+            message={`Great job! You've correctly identified the chord`}
+            chord={dailyChord.name}
+            buttonText={path === '/playground' && 'Play again'}
+            onClose={
+              path === '/playground'
+                ? handleRestartGame
+                : () => setHitModal(false)
             }
           />
+        )}
+        <form
+          onSubmit={handleSubmit}
+          className="w-full flex flex-col gap-3 items-center justify-center"
+        >
+          <input
+            type="text"
+            value={userInput}
+            onChange={e => setUserInput(capitalizeFirstLetter(e.target.value))}
+            placeholder="Ex: F#m"
+            className={`bg-transparent border-b-8 border-primary text-white text-center font-bold text-8xl py-4 outline-none w-[500px] disabled:opacity-50 disabled:pointer-events-none`}
+            disabled={
+              isLoading || !isToneInitialized || attempts > 4 || isCorrect
+            }
+          />
+          <div className="mt-5 w-full flex justify-center gap-3">
+            <MusicButton
+              icon={FaPlay}
+              size={60}
+              disabled={
+                isLoading || !isToneInitialized || attempts > 4 || isCorrect
+              }
+              onClick={() => playChord(dailyChord)}
+            />
+            <MusicButton
+              icon={GiMusicalNotes}
+              size={60}
+              disabled={
+                isLoading || !isToneInitialized || attempts > 4 || isCorrect
+              }
+              onClick={() => playChordArpeggiated(dailyChord)}
+            />
+            <MusicButton
+              icon={FaArrowTurnDown}
+              variant="secondary"
+              text="Enter"
+              disabled={
+                isLoading || !isToneInitialized || attempts > 4 || isCorrect
+              }
+            />
+          </div>
+        </form>
+        <div>
+          <Correctometer accuracy={accuracy} />
         </div>
-      </form>
-      <div>
-        <Correctometer accuracy={accuracy} />
       </div>
-    </div>
+    </>
   );
 };
 
