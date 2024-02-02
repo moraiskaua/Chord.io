@@ -49,7 +49,7 @@ const Modal: React.FC<ModalProps> = ({
   );
 
   useEffect(() => {
-    setImageUrl(session.data.user?.image ?? localStorage.getItem('userPhoto'));
+    setImageUrl(session.data?.user?.image ?? localStorage.getItem('userPhoto'));
   }, [session.data]);
 
   const handleUpload = async result => {
