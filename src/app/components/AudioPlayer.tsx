@@ -20,6 +20,7 @@ import axios from 'axios';
 import { useSession } from 'next-auth/react';
 import { notesPossibilities } from '@/app/utils/notesPossibilities';
 import Loading from './Loading';
+import { useTranslations } from 'next-intl';
 
 interface ChordType {
   name: string;
@@ -46,6 +47,8 @@ const AudioPlayer = () => {
   const session = useSession();
   const path = usePathname();
   const router = useRouter();
+  const c = useTranslations('isCorrectModal');
+  const h = useTranslations('hitModal');
 
   useEffect(() => {
     if (path === '/playground') {
@@ -201,10 +204,9 @@ const AudioPlayer = () => {
       <div className="bg-[#231C24] w-[95%] rounded-2xl flex-1 flex p-3">
         {path === '/' && isCorrectModal && (
           <Modal
-            variant="home"
-            title="Congratulations!"
-            message="You've already hit the chord of the day!"
-            buttonText="Go to Playground"
+            title={c('title')}
+            message={c('message')}
+            buttonText={c('buttonText')}
             onClose={() => setIsCorrectModal(false)}
             onGoToPlayground={() => {
               setIsCorrectModal(false);
@@ -214,9 +216,8 @@ const AudioPlayer = () => {
         )}
         {hitModal && (
           <Modal
-            variant="home"
-            title="Congratulations!"
-            message={`Great job! You've correctly identified the chord`}
+            title={h('title')}
+            message={h('message')}
             chord={dailyChord.name}
             buttonText={path === '/playground' && 'Play again'}
             onClose={

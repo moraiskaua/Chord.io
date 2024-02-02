@@ -7,6 +7,15 @@
     "title": "Bem-vindo ao modo playground!",
     "message": "Aqui você pode adivinhar quantos acordes quiser."
   },
+  "isCorrectModal": {
+    "title": "Parabéns!",
+    "message": "Você já acertou o acorde do dia!",
+    "buttonText": "Ir para o Playground"
+  },
+  "hitModal": {
+    "title": "Bom trabalho!",
+    "message": "Você identificou corretamente o acorde!"
+  },
   "helpModal": {
     "normalMode": {
       "title": "Modo Normal",

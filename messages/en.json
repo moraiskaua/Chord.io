@@ -7,6 +7,15 @@
     "title": "Welcome to the playground!",
     "message": "Here you can guess as many chords as you want."
   },
+  "isCorrectModal": {
+    "title": "Congratulations!",
+    "message": "You've already hit the chord of the day!",
+    "buttonText": "Go to Playground"
+  },
+  "hitModal": {
+    "title": "Congratulations!",
+    "message": "Great job! You've correctly identified the chord!"
+  },
   "helpModal": {
     "normalMode": {
       "title": "Normal Mode",
