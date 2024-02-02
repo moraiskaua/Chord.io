@@ -4,14 +4,16 @@ import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { FaUserCircle } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { User } from '@prisma/client';
 import axios from 'axios';
 import Loading from '../components/Loading';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 const Leaderboard = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const t = useTranslations('leaderboard');
   const router = useRouter();
 
   useEffect(() => {
@@ -40,9 +42,9 @@ const Leaderboard = () => {
       <table className="w-full h-full text-white">
         <thead className="bg-tertiary">
           <tr>
-            <th>Rank</th>
-            <th>Player</th>
-            <th>Points</th>
+            <th>{t('rank')}</th>
+            <th>{t('name')}</th>
+            <th>{t('points')}</th>
           </tr>
         </thead>
         <tbody className="text-center h-full shadow-custom bg-tertiary">

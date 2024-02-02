@@ -52,6 +52,11 @@
     "signIn": "Entrar",
     "register": "Cadastre-se"
   },
+  "leaderboard": {
+    "rank": "Posição",
+    "name": "Nome",
+    "points": "Pontos"
+  },
   "Correctometer": {
     "areClose": "VOCÊ ESTÁ PERTO?"
   }

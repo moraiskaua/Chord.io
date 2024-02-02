@@ -40,7 +40,7 @@
     }
   },
   "button": {
-    "enter": "Enviar"
+    "enter": "Enter"
   },
   "signIn": {
     "name": "Name",
@@ -51,6 +51,11 @@
     "createAccount": "Create an account",
     "signIn": "Login",
     "register": "Register"
+  },
+  "leaderboard": {
+    "rank": "Rank",
+    "name": "Name",
+    "points": "Points"
   },
   "Correctometer": {
     "areClose": "ARE YOU CLOSE?"

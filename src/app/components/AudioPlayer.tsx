@@ -49,6 +49,7 @@ const AudioPlayer = () => {
   const router = useRouter();
   const c = useTranslations('isCorrectModal');
   const h = useTranslations('hitModal');
+  const t = useTranslations('button');
 
   useEffect(() => {
     if (path === '/playground') {
@@ -261,7 +262,7 @@ const AudioPlayer = () => {
             <MusicButton
               icon={FaArrowTurnDown}
               variant="secondary"
-              text="Enter"
+              text={t('enter')}
               disabled={
                 isLoading || !isToneInitialized || attempts > 4 || isCorrect
               }
