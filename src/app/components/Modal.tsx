@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({
   const [imageUrl, setImageUrl] = useState(localStorage.getItem('userPhoto'));
   const { changeLanguage } = useContext(LanguageContext);
   const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem('language'),
+    JSON.parse(localStorage.getItem('language')).name ?? 'en',
   );
 
   const handleUpload = async result => {
@@ -129,7 +129,6 @@ const Modal: React.FC<ModalProps> = ({
               value={selectedLanguage}
               onChange={e => {
                 setSelectedLanguage(e.target.value as LanguageType);
-                localStorage.setItem('language', e.target.value);
                 changeLanguage(selectedLanguage as LanguageType);
               }}
               className="bg-tertiary shadow-custom text-white px-3 py-2 rounded-md"
