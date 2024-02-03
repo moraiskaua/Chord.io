@@ -270,7 +270,7 @@ const AudioPlayer = () => {
           </div>
         </form>
         <div>
-          <Correctometer accuracy={accuracy} />
+          <Correctometer accuracy={accuracy} isLoading={isLoading} />
         </div>
       </div>
     </>

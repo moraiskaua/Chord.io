@@ -7,9 +7,13 @@ import {
 
 interface CorrectometerProps {
   accuracy: number;
+  isLoading: boolean;
 }
 
-const Correctometer: React.FC<CorrectometerProps> = ({ accuracy }) => {
+const Correctometer: React.FC<CorrectometerProps> = ({
+  accuracy,
+  isLoading,
+}) => {
   const accuracyRange =
     accuracy <= 43.7
       ? 'wrong'
@@ -34,7 +38,11 @@ const Correctometer: React.FC<CorrectometerProps> = ({ accuracy }) => {
 
   return (
     <>
-      <div className="hidden h-full w-[280px] md:flex flex-col justify-center items-center gap-3">
+      <div
+        className={`hidden h-full w-[280px] md:flex flex-col justify-center items-center gap-3 ${
+          isLoading && 'opacity-45'
+        }`}
+      >
         <p className="text-2xl font-bold uppercase bg-gradient-to-b from-[#C47BFD] via-[#C47BFD] to-[#343234] inline-block text-transparent bg-clip-text">
           {t('areClose')}
         </p>
@@ -49,15 +57,19 @@ const Correctometer: React.FC<CorrectometerProps> = ({ accuracy }) => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center m-auto md:hidden fixed top-28 left-1 right-1 w-[90%] h-14">
-        <p className="text-md font-bold uppercase bg-gradient-to-b from-[#C47BFD] via-[#C47BFD] to-[#343234] inline-block text-transparent bg-clip-text">
+      <div
+        className={`flex flex-col items-center m-auto md:hidden fixed top-28 left-1 right-1 w-[90%] h-12 ${
+          isLoading && 'opacity-45'
+        }`}
+      >
+        <p className="text-sm md:text-md font-bold uppercase bg-gradient-to-b from-[#C47BFD] via-[#C47BFD] to-[#343234] inline-block text-transparent bg-clip-text">
           {t('areClose')}
         </p>
         <div className="w-full h-full">
           <div className="bg-[#534657] w-full h-full rounded-full p-1 relative">
             <div className="bg-gradient-to-l from-[#00FEC1] via-[#6E49D7] to-[#FB037A] h-full rounded-full" />
             <TbGuitarPickFilled
-              className={`top-8 rotate-180 absolute ${mobilePosition} ${mobileColor} transition-all ease-linear`}
+              className={`top-7 rotate-180 absolute ${mobilePosition} ${mobileColor} transition-all ease-linear`}
               size={40}
             />
           </div>
