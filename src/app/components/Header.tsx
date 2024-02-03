@@ -25,10 +25,6 @@ const Header = () => {
   const session = useSession();
   const t = useTranslations('settingsModal');
 
-  useEffect(() => {
-    console.log(session.data);
-  }, [session]);
-
   return (
     <>
       {helpModal && (

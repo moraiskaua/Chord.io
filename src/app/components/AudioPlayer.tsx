@@ -21,6 +21,7 @@ import { useSession } from 'next-auth/react';
 import { notesPossibilities } from '@/app/utils/notesPossibilities';
 import Loading from './Loading';
 import { useTranslations } from 'next-intl';
+import toast from 'react-hot-toast';
 
 interface ChordType {
   name: string;
@@ -164,7 +165,7 @@ const AudioPlayer = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!userInput) return alert('Field is empty!');
+    if (!userInput) return toast.error(t('emptyInput'));
 
     setUserGuess(userInput);
     calculateAccuracy(userInput, dailyChord.notes);

@@ -40,7 +40,8 @@
     }
   },
   "button": {
-    "enter": "Enviar"
+    "enter": "Enviar",
+    "emptyInput": "Por favor, digite um acorde"
   },
   "signIn": {
     "name": "Nome",

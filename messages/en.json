@@ -40,7 +40,8 @@
     }
   },
   "button": {
-    "enter": "Enter"
+    "enter": "Enter",
+    "emptyInput": "Please enter a chord"
   },
   "signIn": {
     "name": "Name",
