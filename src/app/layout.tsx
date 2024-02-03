@@ -18,6 +18,7 @@ export default function LocaleLayout({
 }) {
   return (
     <html lang={locale}>
+      <link rel="icon" href="/images/logo.png" />
       <body className="bg-[#201d20]">
         <LanguageProvider>
           <ToasterContext />
