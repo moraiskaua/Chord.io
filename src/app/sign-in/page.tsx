@@ -104,7 +104,7 @@ const SignIn = () => {
       >
         <FaArrowLeft size={15} />
       </div>
-      <header className="w-full uppercase text-primary font-bold text-7xl flex justify-around items-center h-40">
+      <header className="w-full uppercase text-primary font-bold text-4xl md:text-7xl flex justify-around items-center h-32 md:h-40">
         <Link href="/">
           <h1>CHORD.IO</h1>
         </Link>
@@ -112,7 +112,7 @@ const SignIn = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-96 flex flex-col gap-2"
+        className="w-full md:w-96 flex flex-col gap-2"
       >
         {variant === 'REGISTER' && (
           <Input
