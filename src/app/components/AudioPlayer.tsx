@@ -245,7 +245,6 @@ const AudioPlayer = () => {
           <div className="mt-5 w-full flex justify-center gap-3">
             <MusicButton
               icon={FaPlay}
-              size={60}
               disabled={
                 isLoading || !isToneInitialized || attempts > 4 || isCorrect
               }
@@ -253,7 +252,6 @@ const AudioPlayer = () => {
             />
             <MusicButton
               icon={GiMusicalNotes}
-              size={60}
               disabled={
                 isLoading || !isToneInitialized || attempts > 4 || isCorrect
               }

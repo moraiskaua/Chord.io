@@ -4,14 +4,12 @@ import { IconType } from 'react-icons';
 interface MusicButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary';
   icon: IconType;
-  size?: number;
   text?: string;
 }
 
 const MusicButton: React.FC<MusicButtonProps> = ({
   variant = 'primary',
   icon: Icon,
-  size,
   text,
   disabled,
   ...props
@@ -20,7 +18,7 @@ const MusicButton: React.FC<MusicButtonProps> = ({
     <button
       className={`${
         variant === 'secondary'
-          ? 'bg-[#8C52B9] text-white border-2 border-primary rounded-2xl p-6 uppercase font-bold flex flex-col justify-center items-center gap-2'
+          ? 'bg-[#8C52B9] text-white border-2 border-primary rounded-2xl p-6 text-xs md:text-lg uppercase font-bold flex flex-col justify-center items-center gap-2'
           : 'bg-[#C47BFD] text-[#8C52B9]'
       }
       ${disabled && 'opacity-50 pointer-events-none'}
@@ -30,8 +28,9 @@ const MusicButton: React.FC<MusicButtonProps> = ({
     >
       {text}
       <Icon
-        size={size ?? 20}
-        className={variant === 'secondary' ? 'rotate-90' : ''}
+        className={
+          variant === 'secondary' ? 'rotate-90 text-xl' : 'text-5xl md:text-6xl'
+        }
       />
     </button>
   );
