@@ -82,13 +82,13 @@ const Modal: React.FC<ModalProps> = ({
           />
         </div>
         <div className="flex items-center justify-center mb-3 text-xl md:text-2xl">
-          <h2 className="font-bold">{title}</h2>
+          <h2 className="font-bold md:text-md">{title}</h2>
           {variant === 'playground' && (
             <ImHappy2 className="ml-2.5 text-yellow-400 " />
           )}
         </div>
         {variant !== 'settings' && (
-          <p className="text-gray-300">
+          <p className="text-gray-300 text-sm md:text-md">
             {message} <span className="text-primary font-bold">{chord}</span>
           </p>
         )}

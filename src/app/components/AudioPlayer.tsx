@@ -237,7 +237,7 @@ const AudioPlayer = () => {
             value={userInput}
             onChange={e => setUserInput(capitalizeFirstLetter(e.target.value))}
             placeholder="Ex: F#m"
-            className={`bg-transparent border-b-8 border-primary text-white text-center font-bold text-8xl py-4 outline-none w-[500px] disabled:opacity-50 disabled:pointer-events-none`}
+            className={`bg-transparent border-b-8 border-primary text-white text-center font-bold outline-none text-5xl py-2 w-[300px] md:text-8xl md:py-4 md:w-[500px] disabled:opacity-50 disabled:pointer-events-none`}
             disabled={
               isLoading || !isToneInitialized || attempts > 4 || isCorrect
             }
