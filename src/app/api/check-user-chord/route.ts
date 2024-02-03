@@ -1,4 +1,4 @@
-import { prisma } from '@/app/database/prismadb';
+import prisma from '@/app/database/prismadb';
 import getCurrentUser from '@/app/helpers/getCurrentUser';
 import { NextResponse } from 'next/server';
 

@@ -1,5 +1,5 @@
 import getNewChord from '@/app/helpers/getNewChord';
-import { prisma } from '@/app/database/prismadb';
+import prisma from '@/app/database/prismadb';
 import { NextRequest, NextResponse } from 'next/server';
 import getCurrentUser from '@/app/helpers/getCurrentUser';
 
