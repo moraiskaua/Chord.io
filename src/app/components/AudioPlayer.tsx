@@ -77,7 +77,7 @@ const AudioPlayer = () => {
 
       checkUserChord();
     }
-  }, []);
+  }, [path]);
 
   useEffect(() => {
     if (userGuess === dailyChord?.name && userGuess !== '') {
@@ -176,7 +176,7 @@ const AudioPlayer = () => {
 
     if (path === '/' && attempts < 5) {
       setAttempts(prevAttempts => prevAttempts + 1);
-      localStorage.setItem('attempts', JSON.stringify(attempts + 1));
+      // localStorage.setItem('attempts', JSON.stringify(attempts + 1));
 
       if (userInput === dailyChord.name) {
         const deduction = 20 * attempts;
