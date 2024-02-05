@@ -58,6 +58,7 @@ model UserChord {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   userId       String   @db.ObjectId
   dailyChordId String   @db.ObjectId
+  attempts     Int      @default(0)
   correct      Boolean?
 
   user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
