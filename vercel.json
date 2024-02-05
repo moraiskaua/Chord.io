@@ -1,0 +1,11 @@
+{
+  "routes": [
+    {
+      "src": "/api/get-users",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache" },
+        { "key": "Pragma", "value": "no-cache" }
+      ]
+    }
+  ]
+}
