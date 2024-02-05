@@ -4,12 +4,14 @@ import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { FaUserCircle } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { User } from '@prisma/client';
 import axios from 'axios';
 import Loading from '../components/Loading';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { GetServerSideProps } from 'next';
+import prisma from '../database/prismadb';
 
 const Leaderboard = () => {
   const [users, setUsers] = useState<User[]>([]);
