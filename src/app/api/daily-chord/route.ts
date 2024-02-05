@@ -11,7 +11,7 @@ export const GET = async () => {
     };
 
     return NextResponse.json(chord);
-  } catch (e) {
+  } catch {
     return new NextResponse('Internal server error', { status: 500 });
   }
 };

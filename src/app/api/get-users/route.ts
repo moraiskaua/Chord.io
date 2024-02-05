@@ -5,7 +5,14 @@ export const GET = async () => {
   try {
     const users = await getUsers();
 
-    return NextResponse.json(users);
+    const headers = {
+      'Cache-Control': 'no-cache',
+      Pragma: 'no-cache',
+    };
+
+    return new NextResponse(JSON.stringify(users), {
+      headers,
+    });
   } catch {
     return new NextResponse('Internal server error', { status: 500 });
   }

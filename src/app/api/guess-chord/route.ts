@@ -108,8 +108,7 @@ export const POST = async (req: NextRequest) => {
     }
 
     return NextResponse.json('Correct chord!', { status: 200 });
-  } catch (e) {
-    console.log(e);
+  } catch {
     return new NextResponse('Internal server error', { status: 500 });
   }
 };
