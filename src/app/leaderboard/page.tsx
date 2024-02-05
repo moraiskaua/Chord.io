@@ -27,7 +27,7 @@ const Leaderboard = () => {
 
   return (
     <>
-      {users.length < 1 && <Loading />}
+      {users.length === 0 && <Loading />}
       <header className="w-full uppercase text-primary font-bold text-4xl md:text-7xl flex justify-around items-center h-32 md:h-40">
         <div
           className="absolute top-3 left-3 ring-2 ring-primary p-2 rounded-full text-primary cursor-pointer"

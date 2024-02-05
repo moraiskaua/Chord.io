@@ -32,22 +32,20 @@ export const POST = async (req: NextRequest) => {
       },
     });
 
-    if (existingUserChord && existingUserChord.correct) {
-      return NextResponse.json('User already answered correctly', {
-        status: 200,
-      });
-    }
-
-    if (userInput === dailyChord.name) {
+    if (!existingUserChord) {
       await prisma.$transaction([
         prisma.userChord.create({
           data: {
             userId: user.id,
             dailyChordId: dailyChord.id,
+            attempts: 1,
             correct: userInput === dailyChord.name,
           },
         }),
-        prisma.user.update({
+      ]);
+
+      if (userInput === dailyChord.name) {
+        await prisma.user.update({
           where: {
             email: session.email,
           },
@@ -56,14 +54,62 @@ export const POST = async (req: NextRequest) => {
               increment: calculatedPoints,
             },
           },
-        }),
-      ]);
+        });
+      }
+    } else {
+      if (existingUserChord.correct) {
+        return NextResponse.json('User already answered correctly', {
+          status: 200,
+        });
+      }
 
-      return NextResponse.json('Correct chord!', { status: 200 });
+      if (userInput !== dailyChord.name && existingUserChord.attempts <= 5) {
+        await prisma.userChord.update({
+          where: {
+            id: existingUserChord.id,
+          },
+          data: {
+            attempts: {
+              increment: 1,
+            },
+          },
+        });
+
+        return NextResponse.json('Incorrect chord!', { status: 200 });
+      }
+
+      if (userInput === dailyChord.name) {
+        await prisma.$transaction([
+          prisma.user.update({
+            where: {
+              email: session.email,
+            },
+            data: {
+              points: {
+                increment: calculatedPoints,
+              },
+            },
+          }),
+          prisma.userChord.update({
+            where: {
+              id: existingUserChord.id,
+            },
+            data: {
+              attempts: {
+                increment: 1,
+              },
+              correct: true,
+            },
+          }),
+        ]);
+
+        return NextResponse.json('Correct chord!', { status: 200 });
+      }
     }
 
-    return NextResponse.json('Incorrect chord!', { status: 200 });
-  } catch {
+    return NextResponse.json('Correct chord!', { status: 200 });
+  } catch (e) {
+    console.log(e);
     return new NextResponse('Internal server error', { status: 500 });
   }
 };

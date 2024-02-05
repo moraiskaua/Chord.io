@@ -71,13 +71,18 @@ const AudioPlayer = () => {
     if (path === '/') {
       const checkUserChord = async () => {
         const { data } = await axios.get('/api/check-user-chord/');
-        setIsCorrectModal(data);
-        setIsCorrect(data);
+        setAttempts(data.attempts);
+        setIsCorrectModal(data.correct);
+        setIsCorrect(data.correct);
       };
 
       checkUserChord();
     }
   }, [path]);
+
+  useEffect(() => {
+    console.log(attempts);
+  }, [attempts]);
 
   useEffect(() => {
     if (userGuess === dailyChord?.name && userGuess !== '') {
@@ -174,20 +179,19 @@ const AudioPlayer = () => {
       return setHitModal(true);
     }
 
-    if (path === '/' && attempts < 5) {
-      setAttempts(prevAttempts => prevAttempts + 1);
-      // localStorage.setItem('attempts', JSON.stringify(attempts + 1));
+    if (path === '/') {
+      setAttempts(prev => prev + 1);
+      const deduction = 20 * attempts;
+      const calculatedPoints = Math.max(100 - deduction, 0);
+
+      await axios.post('/api/guess-chord', {
+        userInput,
+        calculatedPoints,
+      });
 
       if (userInput === dailyChord.name) {
-        const deduction = 20 * attempts;
-        const calculatedPoints = Math.max(100 - deduction, 0);
         setIsCorrect(true);
         setHitModal(true);
-
-        await axios.post('/api/guess-chord', {
-          userInput,
-          calculatedPoints,
-        });
       }
     }
   };
@@ -240,21 +244,21 @@ const AudioPlayer = () => {
             placeholder="Ex: F#m"
             className={`bg-transparent border-b-8 border-primary text-white text-center font-bold outline-none text-5xl py-2 w-[300px] md:text-8xl md:py-4 md:w-[500px] disabled:opacity-50 disabled:pointer-events-none`}
             disabled={
-              isLoading || !isToneInitialized || attempts > 4 || isCorrect
+              isLoading || !isToneInitialized || attempts >= 5 || isCorrect
             }
           />
           <div className="mt-5 w-full flex justify-center gap-3">
             <MusicButton
               icon={FaPlay}
               disabled={
-                isLoading || !isToneInitialized || attempts > 4 || isCorrect
+                isLoading || !isToneInitialized || attempts >= 5 || isCorrect
               }
               onClick={() => playChord(dailyChord)}
             />
             <MusicButton
               icon={GiMusicalNotes}
               disabled={
-                isLoading || !isToneInitialized || attempts > 4 || isCorrect
+                isLoading || !isToneInitialized || attempts >= 5 || isCorrect
               }
               onClick={() => playChordArpeggiated(dailyChord)}
             />
@@ -263,7 +267,7 @@ const AudioPlayer = () => {
               variant="secondary"
               text={t('enter')}
               disabled={
-                isLoading || !isToneInitialized || attempts > 4 || isCorrect
+                isLoading || !isToneInitialized || attempts >= 5 || isCorrect
               }
             />
           </div>

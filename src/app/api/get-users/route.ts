@@ -6,7 +6,7 @@ export const GET = async () => {
     const users = await getUsers();
 
     return NextResponse.json(users);
-  } catch (e) {
+  } catch {
     return new NextResponse('Internal server error', { status: 500 });
   }
 };

@@ -16,14 +16,17 @@ export const GET = async () => {
       },
     });
 
-    const userChords = await prisma.userChord.findFirst({
+    const userChord = await prisma.userChord.findFirst({
       where: {
         userId: session.id,
         dailyChordId: dailyChord[0].id,
       },
     });
 
-    return NextResponse.json(userChords ? userChords : false, { status: 200 });
+    return NextResponse.json(
+      userChord ? userChord : { attempts: 0, correct: false },
+      { status: 200 },
+    );
   } catch {
     return new NextResponse('Internal Server Error', { status: 500 });
   }
