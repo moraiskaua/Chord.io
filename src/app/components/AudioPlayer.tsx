@@ -245,7 +245,7 @@ const AudioPlayer = () => {
               isLoading || !isToneInitialized || attempts >= 5 || isCorrect
             }
           />
-          {path === '/' && attempts >= 5 && (
+          {path === '/' && !isCorrect && attempts >= 5 && (
             <h2 className="text-white text-xs md:text-lg">
               {a('noAttemps')}.{' '}
               <Link href="/playground" className="text-primary">

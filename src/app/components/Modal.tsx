@@ -69,8 +69,9 @@ const Modal: React.FC<ModalProps> = ({
       onClick={onClose}
     >
       <div
-        className={`bg-[#231C24] text-white p-8 rounded-md shadow-lg text-center relative w-[90%] md:w-[670px] ${
-          variant === 'help' && 'h-5/6 md:h-min text-xs md:text-base'
+        className={`bg-[#231C24] text-white p-8 rounded-md shadow-lg text-center relative ${
+          variant === 'help' &&
+          'w-[90%] md:w-[670px] h-5/6 md:h-min text-xs md:text-base'
         }`}
         onClick={e => e.stopPropagation()}
       >
