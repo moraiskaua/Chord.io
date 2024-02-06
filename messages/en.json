@@ -65,5 +65,8 @@
   },
   "Correctometer": {
     "areClose": "ARE YOU CLOSE?"
+  },
+  "footer": {
+    "develop": "Developed by"
   }
 }

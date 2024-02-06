@@ -53,6 +53,7 @@ const AudioPlayer = () => {
   const h = useTranslations('hitModal');
   const t = useTranslations('button');
   const a = useTranslations('audioPlayer');
+  const f = useTranslations('footer');
 
   useEffect(() => {
     if (path === '/playground') {
@@ -282,6 +283,19 @@ const AudioPlayer = () => {
           <Correctometer accuracy={accuracy} isLoading={isLoading} />
         </div>
       </div>
+      <p className="text-white/30 text-xs md:text-sm p-1">
+        <span>
+          {f('develop')}{' '}
+          <strong
+            className="cursor-pointer hover:underline"
+            onClick={() =>
+              window.open('https://github.com/moraiskaua', '_blank')
+            }
+          >
+            Kauã Morais
+          </strong>
+        </span>
+      </p>
     </>
   );
 };

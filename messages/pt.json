@@ -65,5 +65,8 @@
   },
   "Correctometer": {
     "areClose": "VOCÊ ESTÁ PERTO?"
+  },
+  "footer": {
+    "develop": "Desenvolvido por"
   }
 }
