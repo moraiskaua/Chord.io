@@ -39,6 +39,9 @@
       "pt": "Portuguese"
     }
   },
+  "audioPlayer": {
+    "noAttemps": "You've already spent all your attempts"
+  },
   "button": {
     "enter": "Enter",
     "emptyInput": "Please enter a chord"

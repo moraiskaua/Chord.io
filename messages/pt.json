@@ -39,6 +39,9 @@
       "pt": "Português"
     }
   },
+  "audioPlayer": {
+    "noAttemps": "Você já gastou todas as suas tentativas"
+  },
   "button": {
     "enter": "Enviar",
     "emptyInput": "Por favor, digite um acorde"

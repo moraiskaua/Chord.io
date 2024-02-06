@@ -22,6 +22,7 @@ import { notesPossibilities } from '@/app/utils/notesPossibilities';
 import Loading from './Loading';
 import { useTranslations } from 'next-intl';
 import toast from 'react-hot-toast';
+import Link from 'next/link';
 
 interface ChordType {
   name: string;
@@ -51,6 +52,7 @@ const AudioPlayer = () => {
   const c = useTranslations('isCorrectModal');
   const h = useTranslations('hitModal');
   const t = useTranslations('button');
+  const a = useTranslations('audioPlayer');
 
   useEffect(() => {
     if (path === '/playground') {
@@ -243,6 +245,14 @@ const AudioPlayer = () => {
               isLoading || !isToneInitialized || attempts >= 5 || isCorrect
             }
           />
+          {path === '/' && attempts >= 5 && (
+            <h2 className="text-white text-xs md:text-lg">
+              {a('noAttemps')}.{' '}
+              <Link href="/playground" className="text-primary">
+                {c('buttonText')}
+              </Link>
+            </h2>
+          )}
           <div className="mt-5 w-full flex justify-center gap-3">
             <MusicButton
               icon={FaPlay}

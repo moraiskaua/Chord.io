@@ -62,7 +62,7 @@ const Correctometer: React.FC<CorrectometerProps> = ({
           isLoading && 'opacity-45'
         }`}
       >
-        <p className="text-sm md:text-md font-bold uppercase bg-gradient-to-b from-[#C47BFD] via-[#C47BFD] to-[#343234] inline-block text-transparent bg-clip-text">
+        <p className="text-sm font-bold uppercase bg-gradient-to-b from-[#C47BFD] via-[#C47BFD] to-[#343234] inline-block text-transparent bg-clip-text">
           {t('areClose')}
         </p>
         <div className="w-full h-full">
