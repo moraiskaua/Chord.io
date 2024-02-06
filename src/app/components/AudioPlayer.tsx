@@ -81,10 +81,6 @@ const AudioPlayer = () => {
   }, [path]);
 
   useEffect(() => {
-    console.log(attempts);
-  }, [attempts]);
-
-  useEffect(() => {
     if (userGuess === dailyChord?.name && userGuess !== '') {
       setHitModal(true);
     }
