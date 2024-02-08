@@ -58,7 +58,7 @@ const Correctometer: React.FC<CorrectometerProps> = ({
       </div>
 
       <div
-        className={`flex flex-col items-center m-auto md:hidden fixed top-28 left-1 right-1 w-[90%] h-12 ${
+        className={`flex flex-col items-center m-auto md:hidden fixed top-28 left-1 right-1 w-[350px] h-12 ${
           isLoading && 'opacity-45'
         }`}
       >
