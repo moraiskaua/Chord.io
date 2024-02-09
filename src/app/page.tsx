@@ -21,6 +21,15 @@ const Home = () => {
     }
   }, []);
 
+  useEffect(() => {
+    // para quem tem a versão antiga do sistema
+    const languageObj = localStorage.getItem('language');
+
+    if (languageObj.name) {
+      localStorage.clear();
+    }
+  }, []);
+
   return (
     <InstrumentProvider>
       {showModal && (

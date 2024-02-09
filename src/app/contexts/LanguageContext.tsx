@@ -17,35 +17,27 @@ export const LanguageContext = createContext<LanguageContextProps>({
 });
 
 const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [translate, setTranslate] = useState({ name: 'en', value: en });
+  const [translate, setTranslate] = useState('en');
 
   useEffect(() => {
-    setTranslate(
-      JSON.parse(localStorage.getItem('language')) ?? { name: 'en', value: en },
-    );
+    setTranslate(localStorage.getItem('language') ?? 'en');
   }, []);
 
   const changeLanguage = (value: string) => {
     if (value === 'en') {
-      setTranslate({ name: 'pt', value: pt });
-      localStorage.setItem(
-        'language',
-        JSON.stringify({ name: 'pt', value: pt }),
-      );
+      setTranslate('pt');
+      localStorage.setItem('language', 'pt');
     } else {
-      setTranslate({ name: 'en', value: en });
-      localStorage.setItem(
-        'language',
-        JSON.stringify({ name: 'en', value: en }),
-      );
+      setTranslate('en');
+      localStorage.setItem('language', 'en');
     }
   };
 
   return (
     <LanguageContext.Provider value={{ translate, changeLanguage }}>
       <NextIntlClientProvider
-        messages={translate.value}
-        locale={translate.name}
+        messages={translate === 'pt' ? pt : en}
+        locale={translate ?? 'en'}
       >
         {children}
       </NextIntlClientProvider>

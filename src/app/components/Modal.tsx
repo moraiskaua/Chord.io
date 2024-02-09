@@ -45,7 +45,7 @@ const Modal: React.FC<ModalProps> = ({
   const [imageUrl, setImageUrl] = useState('');
   const { changeLanguage } = useContext(LanguageContext);
   const [selectedLanguage, setSelectedLanguage] = useState(
-    JSON.parse(localStorage.getItem('language'))?.name ?? 'en',
+    localStorage.getItem('language') ?? 'en',
   );
 
   useEffect(() => {
