@@ -1,6 +1,5 @@
 'use client';
 
-import InstrumentProvider from '@/app/contexts/InstrumentContext';
 import Header from '../components/Header';
 import AudioPlayer from '../components/AudioPlayer';
 import { useEffect, useState } from 'react';
@@ -21,7 +20,7 @@ const Playground = () => {
   }, []);
 
   return (
-    <InstrumentProvider>
+    <>
       {showModal && (
         <Modal
           variant="playground"
@@ -34,7 +33,7 @@ const Playground = () => {
         <Header />
         <AudioPlayer />
       </main>
-    </InstrumentProvider>
+    </>
   );
 };
 

@@ -23,6 +23,7 @@ import Loading from './Loading';
 import { useTranslations } from 'next-intl';
 import toast from 'react-hot-toast';
 import Link from 'next/link';
+import { capitalizeFirstLetter } from '../utils/capitalizeFirstLetter';
 
 interface ChordType {
   name: string;
@@ -118,10 +119,6 @@ const AudioPlayer = () => {
     setDailyChord(newChord);
   };
 
-  const capitalizeFirstLetter = (input: string) => {
-    return input.charAt(0).toUpperCase() + input.slice(1);
-  };
-
   const calculateAccuracy = (userGuess: string, correctNotes: string[]) => {
     const dailyNotes = correctNotes.map(note => note.replace('4', ''));
     const userNotes = getChordNotes(userGuess);
@@ -213,7 +210,7 @@ const AudioPlayer = () => {
             message={c('message')}
             buttonText={c('buttonText')}
             onClose={() => setIsCorrectModal(false)}
-            onGoToPlayground={() => {
+            handleClickButton={() => {
               setIsCorrectModal(false);
               router.push('/playground');
             }}

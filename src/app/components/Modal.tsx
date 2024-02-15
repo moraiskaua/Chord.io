@@ -26,7 +26,7 @@ interface ModalProps {
   variant?: 'default' | 'playground' | 'help' | 'settings';
   bodyModal?: BodyModalType[];
   onClose: () => void;
-  onGoToPlayground?: () => void;
+  handleClickButton?: () => void;
 }
 
 export type LanguageType = 'en' | 'pt';
@@ -38,7 +38,7 @@ const Modal: React.FC<ModalProps> = ({
   chord,
   buttonText,
   onClose,
-  onGoToPlayground,
+  handleClickButton,
 }) => {
   const t = useTranslations('settingsModal');
   const session = useSession();
@@ -134,7 +134,7 @@ const Modal: React.FC<ModalProps> = ({
         {buttonText && (
           <button
             className="bg-primary text-white py-2 px-4 rounded-md hover:bg-secondary transition-all duration-300 mt-4"
-            onClick={onGoToPlayground ?? onClose}
+            onClick={handleClickButton ?? onClose}
           >
             {buttonText}
           </button>

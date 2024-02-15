@@ -12,6 +12,11 @@
     "message": "Você já acertou o acorde do dia!",
     "buttonText": "Ir para o Playground"
   },
+  "guestModal": {
+    "title": "Entre para continuar",
+    "message": "Você deve estar logado para tentar o acorde do dia.",
+    "buttonText": "Entrar"
+  },
   "hitModal": {
     "title": "Bom trabalho!",
     "message": "Você identificou corretamente o acorde!"

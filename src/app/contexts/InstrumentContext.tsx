@@ -1,3 +1,5 @@
+'use client';
+
 import React, { ReactNode, createContext, useEffect, useState } from 'react';
 
 type InstrumentType = 'guitar-acoustic' | 'piano';

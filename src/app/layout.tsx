@@ -3,6 +3,7 @@ import AuthContext from './contexts/AuthContext';
 import './globals.css';
 import LanguageProvider from '@/app/contexts/LanguageContext';
 import ToasterContext from './contexts/ToasterContext';
+import InstrumentProvider from './contexts/InstrumentContext';
 
 export const metadata: Metadata = {
   title: 'Chord.io',
@@ -21,8 +22,10 @@ export default function LocaleLayout({
       <link rel="icon" href="/assets/favicon.ico" />
       <body className="bg-[#201d20]">
         <LanguageProvider>
-          <ToasterContext />
-          <AuthContext>{children}</AuthContext>
+          <InstrumentProvider>
+            <ToasterContext />
+            <AuthContext>{children}</AuthContext>
+          </InstrumentProvider>
         </LanguageProvider>
       </body>
     </html>

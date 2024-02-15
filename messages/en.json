@@ -16,6 +16,11 @@
     "title": "Congratulations!",
     "message": "Great job! You've correctly identified the chord!"
   },
+  "guestModal": {
+    "title": "Sign in to continue",
+    "message": "You must be logged in to go to chord of the day mode.",
+    "buttonText": "Sign in"
+  },
   "helpModal": {
     "normalMode": {
       "title": "Normal Mode",
